@@ -36,7 +36,7 @@ export default function Delivery() {
         </motion.div>
       </div>
 
-      <div className="page-wrap section">
+      <div className="page-wrap section" style={{ paddingLeft: 'clamp(16px, 4vw, 24px)', paddingRight: 'clamp(16px, 4vw, 24px)' }}>
         {/* Delivery methods */}
         <section className="mb-20">
           <div className="flex items-center gap-3 mb-3">
@@ -44,13 +44,13 @@ export default function Delivery() {
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 28, fontWeight: 300, color: 'var(--t0)' }}>Доставка по Україні</h2>
           </div>
           <div style={{ height: 1, background: 'var(--bd)', marginBottom: 28 }} />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
             {[
               { icon: Truck, title: 'Нова Пошта', subtitle: 'Відділення', time: '1–2 дні', price: '80 ₴', free: 'від 2 000 ₴', note: 'Також кур\'єр у межах міста' },
               { icon: Truck, title: 'Укрпошта',   subtitle: 'Відділення', time: '3–7 днів', price: '50 ₴', free: 'від 2 000 ₴', note: 'Рекомендовано для сіл' },
               { icon: Package, title: 'Самовивіз', subtitle: 'м. Полтава, атьє', time: 'У день замовлення', price: 'Безкоштовно', free: '', note: 'Пн–Пт 10:00–19:00, Сб 11:00–17:00' },
             ].map(d => (
-              <div key={d.title} style={{ padding: 24, border: '1px solid var(--bd)', background: 'var(--b1)' }}>
+              <div key={d.title} style={{ padding: 'clamp(18px, 4vw, 24px)', border: '1px solid var(--bd)', background: 'var(--b1)' }}>
                 <d.icon size={22} style={{ color: 'var(--gold)', marginBottom: 14 }} />
                 <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 300, color: 'var(--t0)', marginBottom: 4 }}>{d.title}</h3>
                 <p style={{ fontSize: 11, letterSpacing: 2, color: 'var(--t2)', textTransform: 'uppercase', marginBottom: 16 }}>{d.subtitle}</p>
@@ -72,8 +72,8 @@ export default function Delivery() {
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 28, fontWeight: 300, color: 'var(--t0)' }}>Міжнародна доставка</h2>
           </div>
           <div style={{ height: 1, background: 'var(--bd)', marginBottom: 28 }} />
-          <div className="grid sm:grid-cols-2 gap-6">
-            <div style={{ padding: 24, border: '1px solid var(--bd)', background: 'var(--b1)' }}>
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+            <div style={{ padding: 'clamp(18px, 4vw, 24px)', border: '1px solid var(--bd)', background: 'var(--b1)' }}>
               <Globe size={22} style={{ color: 'var(--gold)', marginBottom: 14 }} />
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 300, color: 'var(--t0)', marginBottom: 16 }}>Доставляємо у 50+ країн</h3>
               {[
@@ -93,7 +93,7 @@ export default function Delivery() {
                 * Митні збори та податки оплачує покупець відповідно до законодавства своєї країни.
               </p>
             </div>
-            <div style={{ padding: 24, background: '#1a1612', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ padding: 'clamp(18px, 4vw, 24px)', background: '#1a1612', position: 'relative', overflow: 'hidden' }}>
               <div className="absolute inset-0 orn-bg" style={{ opacity: 0.06 }} />
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <Clock size={22} style={{ color: 'var(--gold)', marginBottom: 14 }} />
@@ -122,14 +122,14 @@ export default function Delivery() {
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 28, fontWeight: 300, color: 'var(--t0)' }}>Оплата</h2>
           </div>
           <div style={{ height: 1, background: 'var(--bd)', marginBottom: 28 }} />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
             {[
               { icon: CreditCard, title: 'Картка онлайн', desc: 'Visa, Mastercard через LiqPay або Stripe. Безпечно, миттєво.' },
               { icon: Shield,     title: 'Apple/Google Pay', desc: 'Один дотик — і оплата готова. Підтримується на iOS та Android.' },
               { icon: Package,    title: 'Накладений платіж', desc: 'Оплата при отриманні в Новій Пошті. Лише по Україні.' },
               { icon: Globe,      title: 'PayPal / SWIFT', desc: 'Для міжнародних замовлень. Деталі — при оформленні.' },
             ].map(p => (
-              <div key={p.title} style={{ padding: 20, border: '1px solid var(--bd)', background: 'var(--b1)' }}>
+              <div key={p.title} style={{ padding: 'clamp(16px, 3.6vw, 20px)', border: '1px solid var(--bd)', background: 'var(--b1)' }}>
                 <p.icon size={20} style={{ color: 'var(--gold)', marginBottom: 12 }} />
                 <h4 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 300, color: 'var(--t0)', marginBottom: 8 }}>{p.title}</h4>
                 <p style={{ fontSize: 12, color: 'var(--t2)', lineHeight: 1.6 }}>{p.desc}</p>
@@ -145,7 +145,7 @@ export default function Delivery() {
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 28, fontWeight: 300, color: 'var(--t0)' }}>Повернення та обмін</h2>
           </div>
           <div style={{ height: 1, background: 'var(--bd)', marginBottom: 28 }} />
-          <div className="grid lg:grid-cols-2 gap-10">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
             <div>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 300, color: 'var(--t0)', marginBottom: 16 }}>Умови повернення</h3>
               {[

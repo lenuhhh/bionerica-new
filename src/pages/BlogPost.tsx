@@ -111,8 +111,8 @@ export default function BlogPost() {
         </div>
       </div>
 
-      <div className="page-wrap py-12 pb-24">
-        <div className="grid lg:grid-cols-[1fr_300px] gap-16 items-start">
+      <div className="page-wrap py-12 pb-24" style={{ paddingLeft: 'clamp(16px, 4vw, 24px)', paddingRight: 'clamp(16px, 4vw, 24px)' }}>
+        <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:gap-16 items-start">
           <div>
             {/* Meta */}
             <div className="flex items-center gap-6 mb-10 pb-6" style={{ borderBottom: '1px solid var(--bd)', fontSize: 12, color: 'var(--t2)' }}>
@@ -183,7 +183,7 @@ export default function BlogPost() {
 
             {/* Gallery */}
             {post.gallery && post.gallery.length > 0 && (
-              <div className="grid sm:grid-cols-2 gap-4 my-10">
+              <div className="grid gap-4 sm:grid-cols-2 my-10">
                 {post.gallery.map((img, i) => (
                   <LazyImage key={i} src={img} alt="" aspectRatio="aspect-[4/3]" />
                 ))}
@@ -210,7 +210,7 @@ export default function BlogPost() {
 
           {/* Sidebar */}
           <div className="sticky top-24">
-            <div style={{ background: 'var(--b1)', border: '1px solid var(--bd)', padding: 24, marginBottom: 24 }}>
+            <div style={{ background: 'var(--b1)', border: '1px solid var(--bd)', padding: 'clamp(18px, 4vw, 24px)', marginBottom: 24 }}>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 300, color: 'var(--t0)', marginBottom: 16 }}>Автор</h3>
               <div className="flex items-center gap-3 mb-3">
                 <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--b-inv)', fontFamily: 'Cormorant Garamond, serif', fontSize: 18 }}>
@@ -223,7 +223,7 @@ export default function BlogPost() {
               </div>
             </div>
 
-            <div style={{ border: '1px solid var(--bd)', padding: 24 }}>
+            <div style={{ border: '1px solid var(--bd)', padding: 'clamp(18px, 4vw, 24px)' }}>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 300, color: 'var(--t0)', marginBottom: 16 }}>Інші статті</h3>
               {others.map(p => (
                 <Link key={p.id} to={`/blog/${p.slug}`} className="flex gap-3 mb-4 group">

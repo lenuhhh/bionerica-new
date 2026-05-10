@@ -61,7 +61,7 @@ export default function Blog() {
       </div>
 
       {/* Content */}
-      <div className="page-wrap section">
+      <div className="page-wrap section" style={{ paddingLeft: 'clamp(16px, 4vw, 24px)', paddingRight: 'clamp(16px, 4vw, 24px)' }}>
         {loading && <p style={{ color: 'var(--t2)', fontSize: 13, marginBottom: 20 }}>Завантаження публікацій...</p>}
         <div className="flex gap-3 flex-wrap" style={{ marginBottom: 32 }}>
           {categories.map((category) => {
@@ -88,7 +88,7 @@ export default function Blog() {
             )
           })}
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 md:gap-10">
           {featuredPosts.map((post, i) => (
             <motion.div key={post.id} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
               <Link to={`/blog/${post.slug}`} className="group block">
