@@ -725,7 +725,7 @@ export default function Admin() {
         const product = snap.data as Record<string, unknown>
         const { error } = await upsertProduct(product)
         if (error) throw error
-        const p = product as Product
+        const p = product as unknown as Product
         const restoredSlug = p.slug || String(p.id)
         if (deletedSlugsCache.has(restoredSlug)) {
           deletedSlugsCache.delete(restoredSlug)
@@ -756,7 +756,7 @@ export default function Admin() {
         toast.success('Статус замовлення відновлено')
       } else if (snap.type === 'post' && snap.data) {
         const post = snap.data as BlogPost
-        const { error } = await updatePost(post.id, { ...post as Record<string, unknown> })
+        const { error } = await updatePost(post.id, { ...(post as unknown as Record<string, unknown>) })
         if (error) throw error
         const nextPosts = adminPosts.map(p => p.id === post.id ? post : p)
         setAdminPosts(nextPosts)

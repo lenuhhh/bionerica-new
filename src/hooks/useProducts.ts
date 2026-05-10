@@ -140,7 +140,8 @@ function applyProductFilters(
   }
   if (options?.filter === 'bestseller') filtered = filtered.filter(p => p.is_bestseller)
   if (options?.filter === 'new') filtered = filtered.filter(p => p.is_new)
-  if (options?.maxPrice) filtered = filtered.filter(p => p.price <= options.maxPrice)
+  const maxPrice = options?.maxPrice
+  if (maxPrice !== undefined) filtered = filtered.filter(p => p.price <= maxPrice)
   if (options?.sort === 'price-asc') filtered.sort((a, b) => a.price - b.price)
   if (options?.sort === 'price-desc') filtered.sort((a, b) => b.price - a.price)
   if (options?.sort === 'rating') filtered.sort((a, b) => b.rating - a.rating)
