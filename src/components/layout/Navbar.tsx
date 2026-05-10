@@ -371,11 +371,12 @@ export default function Navbar() {
         {mobileOpen && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="fixed inset-0 z-[80]" style={{ background: 'rgba(0,0,0,0.52)' }}
               onClick={() => setMobileOpen(false)} />
             <motion.div
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
-              transition={{ type: 'tween', duration: 0.32 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 34, mass: 0.85 }}
               className="fixed top-0 left-0 bottom-0 z-[90] flex flex-col"
               style={{ width: 'min(272px, 82vw)', background: 'var(--b0)', borderRight: '1px solid var(--bd)' }}
             >
@@ -450,7 +451,7 @@ export default function Navbar() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.18 }}
+                        transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
                         style={{ overflow: 'hidden', paddingBottom: 8 }}
                       >
                         {user ? (
@@ -522,7 +523,7 @@ export default function Navbar() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.18 }}
+                        transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
                         style={{ overflow: 'hidden', paddingBottom: 8 }}
                       >
                         {wishlistPreview.length > 0 ? (
