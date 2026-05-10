@@ -96,7 +96,7 @@ export default function Cart() {
         {recommended.length > 0 && (
           <div className="mt-20 pt-16" style={{ borderTop: '1px solid var(--bd)' }}>
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 36, fontWeight: 300, color: 'var(--t0)', marginBottom: 36 }}>Можливо, вас зацікавить</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {recommended.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>
           </div>

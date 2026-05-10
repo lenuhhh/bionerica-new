@@ -313,7 +313,7 @@ export default function Catalog() {
         {/* Products — infinite scroll */}
         {dataLoading ? (
           /* Skeleton grid while loading */
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i}>
                 <div className="img-skeleton aspect-[3/4] w-full" />
@@ -331,7 +331,7 @@ export default function Catalog() {
             <p style={{ fontSize: 14, color: 'var(--t2)' }}>Спробуйте змінити фільтри або пошуковий запит</p>
           </div>
         ) : view === 'grid' ? (
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {visibleProducts.map((p, i) => <ProductCard key={p.id} product={p} index={i % PAGE_SIZE} />)}
           </div>
         ) : (

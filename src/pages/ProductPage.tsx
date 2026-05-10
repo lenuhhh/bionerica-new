@@ -544,7 +544,7 @@ export default function ProductPage() {
             <h2 style={{ fontFamily: 'Plus Jakarta Sans, DM Sans, sans-serif', fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 700, color: 'var(--t0)', marginBottom: 40 }}>
               Вам також може сподобатись
             </h2>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>
           </div>

@@ -22,7 +22,7 @@ export default function Wishlist() {
       </div>
       <div className="page-wrap section">
         {list.length > 0 ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {list.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
           </div>
         ) : (
