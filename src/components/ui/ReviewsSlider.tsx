@@ -129,7 +129,7 @@ const ReviewsSlider: React.FC = () => {
           {extendedReviews.map((review, idx) => (
             <div
               key={review.id ? `${review.id}-${idx}` : idx}
-              className="p-8 min-w-[370px] max-w-[370px] flex-shrink-0 flex flex-col justify-between"
+              className="p-5 sm:p-7 md:p-8 min-w-[84vw] max-w-[84vw] sm:min-w-[320px] sm:max-w-[320px] md:min-w-[370px] md:max-w-[370px] flex-shrink-0 flex flex-col justify-between"
               style={{
                 width: SLIDE_WIDTH,
                 background: 'linear-gradient(180deg, rgba(34,29,23,0.94) 0%, rgba(29,25,20,0.98) 100%)',

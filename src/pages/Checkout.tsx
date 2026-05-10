@@ -406,7 +406,7 @@ export default function Checkout() {
 
           {/* Summary sidebar */}
           <div style={{ position: 'sticky', top: 96 }}>
-            <div style={{ background: 'var(--b1)', border: '1px solid var(--bd)', padding: 22, marginBottom: 14 }}>
+            <div style={{ background: 'var(--b1)', border: '1px solid var(--bd)', padding: 'clamp(14px, 3.4vw, 22px)', marginBottom: 14 }}>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 300, color: 'var(--t0)', marginBottom: 14 }}>Замовлення ({count()})</h3>
               {items.map(({ product, qty, weight_option }) => (
                 <div key={`${product.id}-${weight_option || 'd'}`} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
@@ -418,7 +418,7 @@ export default function Checkout() {
                 </div>
               ))}
             </div>
-            <div style={{ background: 'var(--b1)', border: '1px solid var(--bd)', padding: 22 }}>
+            <div style={{ background: 'var(--b1)', border: '1px solid var(--bd)', padding: 'clamp(14px, 3.4vw, 22px)' }}>
               <h4 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 300, color: 'var(--t0)', marginBottom: 14 }}>
                 Підсумок
               </h4>

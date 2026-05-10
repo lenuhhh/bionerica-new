@@ -47,7 +47,7 @@
 
     /* Unified content container width across all sections */
     --content-max: 1180px;
-    --content-gutter: clamp(14px, 2.4vw, 24px);
+    --content-gutter: clamp(16px, 3.8vw, 24px);
   }
 
   /* ── Global reset ── */
@@ -1169,7 +1169,7 @@ main {
    RESPONSIVE
 ═══════════════════════════════════ */
 @media (max-width: 768px)  {
-  :root { --content-gutter: 16px; }
+  :root { --content-gutter: 18px; }
 
   .section    { padding: 64px 0; }
   .section-lg { padding: 80px 0; }
@@ -1188,6 +1188,8 @@ main {
   }
 }
 @media (max-width: 480px)  {
+  :root { --content-gutter: 14px; }
+
   .section    { padding: 48px 0; }
   .section-sm { padding: 40px 0; }
 

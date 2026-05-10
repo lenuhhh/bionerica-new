@@ -57,11 +57,16 @@ if ('serviceWorker' in navigator) {
 }
 
 // ── Dismiss the HTML preloader after React paints ─────────────────────
-// Keep it visible for at least 1900ms so the CSS animation completes gracefully.
+// Keep it a bit longer in standalone mode so installed app launch feels like desktop.
 const _preloaderStart = performance.now()
+const _isStandaloneLaunch =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  (navigator as Navigator & { standalone?: boolean }).standalone === true
+
 function _dismissPreloader() {
   const elapsed = performance.now() - _preloaderStart
-  const wait = Math.max(0, 1900 - elapsed)
+  const minDuration = _isStandaloneLaunch ? 2200 : 1900
+  const wait = Math.max(0, minDuration - elapsed)
   setTimeout(() => {
     const el = document.getElementById('preloader')
     if (!el) return

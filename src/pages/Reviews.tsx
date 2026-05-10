@@ -450,7 +450,7 @@ export default function Reviews() {
             </div>
 
             {/* Rating summary */}
-            <div style={{ background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.2)', padding: '32px 40px', textAlign: 'center' }}>
+            <div style={{ background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.2)', padding: 'clamp(18px, 4vw, 32px) clamp(16px, 5vw, 40px)', textAlign: 'center' }}>
               <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 72, fontWeight: 300, color: 'var(--gold-l)', lineHeight: 1 }}>{avgRating}</p>
               <div className="flex justify-center gap-1 my-3">
                 {[1,2,3,4,5].map(s => <Star key={s} size={18} fill="var(--gold)" stroke="none" />)}

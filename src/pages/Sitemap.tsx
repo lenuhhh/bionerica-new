@@ -108,7 +108,7 @@ export default function Sitemap() {
         />
         {/* Large leaf — top right */}
         <svg
-          style={{ position: 'absolute', top: -40, right: -60, width: 440, opacity: 0.06 }}
+          style={{ position: 'absolute', top: -40, right: 'max(-60px, -8vw)', width: 'min(440px, 56vw)', opacity: 0.06 }}
           viewBox="0 0 380 360"
           fill="none"
         >
@@ -124,8 +124,8 @@ export default function Sitemap() {
           style={{
             position: 'absolute',
             bottom: -40,
-            left: -60,
-            width: 360,
+            left: 'max(-60px, -8vw)',
+            width: 'min(360px, 50vw)',
             opacity: 0.06,
             transform: 'rotate(180deg)',
           }}

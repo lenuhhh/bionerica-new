@@ -330,7 +330,7 @@ export default function Auth() {
       </div>
 
       {/* ── Right form panel ── */}
-      <div className="flex flex-col justify-center px-8 lg:px-16 xl:px-24 py-16" style={{ background: 'var(--b0)' }}>
+      <div className="flex flex-col justify-center px-5 sm:px-8 lg:px-16 xl:px-24 py-12 sm:py-16" style={{ background: 'var(--b0)' }}>
         {/* Mobile back */}
         <Link to="/" className="flex items-center gap-2 mb-10 lg:hidden" style={{ fontSize: 12, letterSpacing: 2, color: 'var(--t2)' }}>
           <ArrowLeft size={14} /> До сайту
