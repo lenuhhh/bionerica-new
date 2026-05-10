@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!--
+    Bionerica Hedgehog Mark
+    Matches the PNG logo: solid dark-green hedgehog silhouette,
+    C-shaped body, spines on top, eye + nose dots.
+  -->
+
+  <!-- Body + spines (single filled path, counter-clockwise trace) -->
+  <path fill="#1e5210" d="
+    M 15 68
+    C 6 52 7 32 18 19
+    C 19 17 22 11 22 11
+    L 27 7
+    L 30 18
+    L 40 3
+    L 43 18
+    L 53 5
+    L 56 19
+    L 65 8
+    L 67 22
+    L 75 13
+    C 85 26 88 44 85 58
+    C 83 67 78 73 78 78
+    C 80 82 86 76 89 72
+    C 90 81 86 90 78 92
+    C 65 95 46 94 33 89
+    C 22 84 18 76 15 68
+    Z
+  "/>
+
+  <!-- Eye: white ring + dark pupil -->
+  <circle fill="#f7faf5" cx="72" cy="54" r="5.5"/>
+  <circle fill="#1e5210" cx="72" cy="54" r="2.8"/>
+
+  <!-- Nose dot -->
+  <circle fill="#f7faf5" cx="79" cy="67" r="3.5"/>
+  <circle fill="#1e5210" cx="79" cy="67" r="1.8"/>
+</svg>

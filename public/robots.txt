@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# Static assets
+Allow: /assets/
+Allow: /images/
+
+# Block admin
+Disallow: /admin
+Disallow: /admin/
+
+# Block auth pages from indexing
+Disallow: /auth
+Disallow: /account
+Disallow: /account/
+
+# Block cart/checkout
+Disallow: /cart
+Disallow: /checkout
+
+# Sitemap
+Sitemap: https://broiderie.ua/sitemap.xml
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 2

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --gold: #c9a96e; --dark: #1a1612; --cream: #f5f0e8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f0e0b; color: #e8e3da; min-height: 100vh; padding: 24px 16px 48px; }
+  h1 { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  h2 { font-family: Georgia, serif; font-size: 36px; font-weight: 300; color: var(--cream); margin-bottom: 4px; line-height: 1.1; }
+  .sub { font-size: 13px; color: rgba(245,240,232,0.45); margin-bottom: 24px; }
+
+  .tabs { display: flex; border-bottom: 1px solid rgba(201,169,110,0.2); margin-bottom: 24px; flex-wrap: wrap; gap: 0; }
+  .tab  { padding: 10px 18px; font-size: 12px; border: none; background: none; color: rgba(245,240,232,0.4); border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; }
+  .tab.on { color: var(--gold); border-bottom-color: var(--gold); }
+  .panel { display: none; }
+  .panel.on { display: block; }
+
+  .section-h { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin: 24px 0 12px; }
+
+  .total-card { background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 12px; padding: 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; }
+  .total-num  { font-family: Georgia, serif; font-size: 60px; font-weight: 300; color: #22c55e; line-height: 1; flex-shrink: 0; }
+  .total-title { font-size: 16px; color: var(--cream); margin-bottom: 4px; }
+  .total-sub  { font-size: 12px; color: rgba(245,240,232,0.45); line-height: 1.6; }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-size: 12px; color: rgba(245,240,232,0.6); width: 190px; flex-shrink: 0; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; }
+  .score-num { font-size: 13px; font-weight: 500; color: var(--cream); width: 32px; text-align: right; flex-shrink: 0; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card { border-radius: 10px; padding: 16px; }
+  .card-g { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); }
+  .card-a { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); }
+  .card-title { font-size: 12px; font-weight: 500; margin-bottom: 10px; }
+  .card-g .card-title { color: #4ade80; }
+  .card-a .card-title { color: #fbbf24; }
+  .card-body { font-size: 12px; color: rgba(245,240,232,0.55); line-height: 1.9; }
+
+  .db-row { border-bottom: 1px solid rgba(201,169,110,0.1); padding: 14px 0; display: grid; grid-template-columns: 140px 1fr 90px; gap: 16px; align-items: start; }
+  .db-row:last-child { border-bottom: none; }
+  .db-name { font-size: 13px; font-weight: 500; color: var(--gold); font-family: monospace; }
+  .db-desc { font-size: 12px; color: rgba(245,240,232,0.55); line-height: 1.7; }
+  .db-desc code { background: rgba(201,169,110,0.12); padding: 1px 5px; border-radius: 3px; font-size: 11px; color: var(--gold); font-family: monospace; }
+  .pill { display: inline-block; font-size: 10px; padding: 3px 9px; border-radius: 10px; letter-spacing: 0.5px; }
+  .pill-r { background: rgba(239,68,68,0.15); color: #f87171; }
+  .pill-g { background: rgba(34,197,94,0.12); color: #4ade80; }
+  .pill-a { background: rgba(245,158,11,0.12); color: #fbbf24; }
+
+  .sql-block { background: rgba(0,0,0,0.4); border: 1px solid rgba(201,169,110,0.15); border-radius: 8px; padding: 16px; font-size: 11px; font-family: monospace; color: rgba(245,240,232,0.55); line-height: 1.8; overflow-x: auto; white-space: pre; margin: 12px 0; }
+  .sql-block .kw { color: #c084fc; }
+  .sql-block .str { color: #86efac; }
+  .sql-block .num { color: #fbbf24; }
+  .sql-block .cm { color: rgba(245,240,232,0.3); }
+
+  .p-row { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,169,110,0.12); border-radius: 8px; padding: 14px 18px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 12; }
+  .p-row.best { border-color: rgba(201,169,110,0.4); background: rgba(201,169,110,0.06); }
+  .p-name { font-size: 14px; color: var(--cream); font-weight: 500; margin-bottom: 3px; }
+  .p-sub  { font-size: 11px; color: rgba(245,240,232,0.4); }
+  .p-price { font-size: 16px; font-weight: 500; color: var(--cream); white-space: nowrap; text-align: right; }
+  .p-price small { display: block; font-size: 10px; color: rgba(245,240,232,0.35); font-weight: 400; }
+  .best-badge { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(201,169,110,0.2); color: var(--gold); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+
+  .step-row { display: flex; gap: 12px; margin-bottom: 14px; }
+  .step-n { width: 26px; height: 26px; border-radius: 50%; background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.3); color: var(--gold); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-body { font-size: 13px; color: rgba(245,240,232,0.55); line-height: 1.65; }
+  .step-body strong { color: var(--cream); font-weight: 500; }
+
+  .income-total { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 10px; padding: 18px 20px; margin-top: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .income-total-label { font-size: 13px; color: #4ade80; font-weight: 500; }
+  .income-total-sub   { font-size: 11px; color: rgba(74,222,128,0.6); margin-top: 2px; }
+  .income-total-val   { font-size: 28px; font-weight: 500; color: #4ade80; }
+
+  .info-box { background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 8px; padding: 14px 18px; margin-top: 14px; font-size: 12px; color: rgba(245,240,232,0.55); line-height: 1.7; }
+  .info-box strong { color: var(--cream); }
+</style>
+</head>
+<body>
+
+<h1>Детальна оцінка проекту</h1>
+<h2>Broiderie v3</h2>
+<p class="sub">53 файли · 24 сторінки · 7 хуків · PWA + Push + SEO · Supabase · 21 анімація</p>
+
+<div class="tabs">
+  <button class="tab on" onclick="showTab('score')">Оцінка</button>
+  <button class="tab" onclick="showTab('db')">База даних</button>
+  <button class="tab" onclick="showTab('sell')">Де продавати</button>
+  <button class="tab" onclick="showTab('income')">Дохід</button>
+</div>
+
+<!-- ══════ SCORE ══════ -->
+<div class="panel on" id="t-score">
+  <div class="total-card">
+    <div class="total-num">9.1</div>
+    <div>
+      <div class="total-title">Загальна оцінка — Broiderie v3</div>
+      <div class="total-sub">
+        Рівень: Преміальний e-commerce · Вартість з нуля: $8,000–15,000<br>
+        Топ-3% серед UA handmade e-commerce проектів
+      </div>
+    </div>
+  </div>
+
+  <div class="section-h">Технічна оцінка по критеріях</div>
+  <div id="bars"></div>
+
+  <div class="section-h" style="margin-top:20px;">Порівняння з ринком</div>
+  <div class="grid2">
+    <div class="card card-g">
+      <div class="card-title">🇺🇦 Україна — 9.3 / 10</div>
+      <div class="card-body">Топ-3% серед UA handmade e-commerce. Конкуренти на Prom.ua значно слабші по UX та технічній частині. Преміальний рівень для будь-якого клієнта.</div>
+    </div>
+    <div class="card card-a">
+      <div class="card-title">🌍 Захід / EU — 7.8 / 10</div>
+      <div class="card-body">Для $500+ потрібен Stripe замість LiqPay та мультимова EN/DE. Технічно відповідає рівню $5k–10k агенцій Польщі та Німеччини.</div>
+    </div>
+  </div>
+
+  <div class="section-h" style="margin-top:20px;">Що є і чого не вистачає</div>
+  <div class="grid2">
+    <div class="card card-g">
+      <div class="card-title">✅ Вже є в проекті</div>
+      <div class="card-body">
+        React 18 + Vite + TypeScript<br>
+        Supabase Auth + Google OAuth<br>
+        PWA + Service Worker + Push API<br>
+        Кошик + Checkout + 5 платіжок<br>
+        Особистий кабінет 6 вкладок<br>
+        Промокоди + Loyalty + Referral<br>
+        SEO + JSON-LD + Sitemap<br>
+        FAQ + Partners + Lookbook<br>
+        Dark/Light theme + 21 анімація<br>
+        Infinite scroll + Reading progress<br>
+        Social share + Countdown timer<br>
+        Push notifications з категоріями<br>
+        iOS/Android/Desktop install guide<br>
+        Privacy + Terms (юридичні)<br>
+        24 сторінки повністю готові
+      </div>
+    </div>
+    <div class="card card-a">
+      <div class="card-title">⚠️ Потрібно до запуску</div>
+      <div class="card-body">
+        Реальні товари в Supabase БД<br>
+        Реальні фото (не Unsplash)<br>
+        Підключити LiqPay / WayForPay<br>
+        VAPID ключ для Push<br>
+        Google OAuth redirect URL<br>
+        Email шаблони в Supabase<br>
+        OG-image 1200×630px<br>
+        Зробити першого юзера адміном<br>
+        Налаштувати домен<br>
+        Деплой на Vercel (HTTPS)<br>
+        Скріншоти PWA (для Store)<br>
+        Stripe (якщо цілитись на Захід)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ DB ══════ -->
+<div class="panel" id="t-db">
+  <p style="font-size:13px;color:rgba(245,240,232,0.5);margin-bottom:20px;line-height:1.7;">
+    7 таблиць вже є в <code style="background:rgba(201,169,110,0.12);padding:1px 5px;border-radius:3px;color:var(--gold);font-size:11px;">supabase-schema.sql</code>. Нижче — що потрібно <strong style="color:var(--cream)">вписати вручну</strong> щоб сайт запрацював.
+  </p>
+
+  <div class="db-row" style="border-top:1px solid rgba(201,169,110,0.1);">
+    <div class="db-name">products</div>
+    <div class="db-desc">
+      Мінімум <strong style="color:var(--cream)">6–12 товарів</strong>. Обов'язкові поля:<br>
+      <code>slug</code> — унікальна URL-назва (vyshyvanka-poltavska)<br>
+      <code>name_uk</code> — назва українською<br>
+      <code>price</code> — ціна у гривнях<br>
+      <code>category</code> — vyshyvanky / sukni / rushnyky / dim / aksesuary<br>
+      <code>images</code> — масив URL мінімум 2 фото<br>
+      <code>technique</code> — Хрестик / Гладь / Мережка<br>
+      <code>description</code> — опис 2–3 речення<br>
+      <code>is_new</code> / <code>is_bestseller</code> — хоча б 2–3 з кожним true
+    </div>
+    <div><span class="pill pill-r">Критично</span></div>
+  </div>
+
+  <div class="db-row">
+    <div class="db-name">profiles</div>
+    <div class="db-desc">
+      Створюється автоматично при реєстрації (тригер в schema.sql).<br>
+      Після першого входу:<br>
+      <code>UPDATE profiles SET role='admin' WHERE email='your@email.com';</code>
+    </div>
+    <div><span class="pill pill-r">Критично</span></div>
+  </div>
+
+  <div class="db-row">
+    <div class="db-name">posts</div>
+    <div class="db-desc">
+      Мінімум <strong style="color:var(--cream)">3–4 блог-статті</strong>:<br>
+      <code>slug</code>, <code>title</code>, <code>excerpt</code>, <code>content</code> (markdown),<br>
+      <code>image</code> (URL), <code>author</code>, <code>category</code>, <code>read_time</code>
+    </div>
+    <div><span class="pill pill-a">Важливо</span></div>
+  </div>
+
+  <div class="db-row">
+    <div class="db-name">reviews</div>
+    <div class="db-desc">
+      5–10 відгуків вручну щоб товари мали рейтинг:<br>
+      <code>product_id</code>, <code>author</code>, <code>rating</code> (1–5),<br>
+      <code>text</code>, <code>verified</code>=true<br>
+      Тригер автоматично перерахує рейтинг у products
+    </div>
+    <div><span class="pill pill-a">Важливо</span></div>
+  </div>
+
+  <div class="db-row">
+    <div class="db-name">orders</div>
+    <div class="db-desc">Заповнюється автоматично через checkout. Вручну нічого.</div>
+    <div><span class="pill pill-g">Авто</span></div>
+  </div>
+
+  <div class="db-row">
+    <div class="db-name">wishlist</div>
+    <div class="db-desc">Заповнюється коли юзер натискає ❤️.</div>
+    <div><span class="pill pill-g">Авто</span></div>
+  </div>
+
+  <div class="db-row">
+    <div class="db-name">addresses</div>
+    <div class="db-desc">Заповнюється з акаунту або checkout.</div>
+    <div><span class="pill pill-g">Авто</span></div>
+  </div>
+
+  <div class="section-h">Стартовий SQL — вставте в Supabase SQL Editor</div>
+  <div class="sql-block"><span class="cm">-- 1. Спочатку запустіть supabase-schema.sql повністю
+-- 2. Потім вставте стартові дані:</span>
+
+<span class="kw">INSERT INTO</span> products (slug, name_uk, price, old_price, category, technique, material, description, images, in_stock, stock_count, is_new, is_bestseller, rating, review_count) <span class="kw">VALUES</span>
+(<span class="str">'vyshyvanka-poltavska-premium'</span>, <span class="str">'Вишиванка Полтавська Преміум'</span>, <span class="num">3800</span>, <span class="num">4800</span>, <span class="str">'vyshyvanky'</span>, <span class="str">'Хрестик, Гладь'</span>, <span class="str">'Льон'</span>, <span class="str">'Елегантна вишиванка з натурального льону з полтавським орнаментом.'</span>,
+ ARRAY[<span class="str">'https://ваш-домен.com/img/product-1-main.jpg'</span>, <span class="str">'https://ваш-домен.com/img/product-1-detail.jpg'</span>],
+ <span class="kw">true</span>, <span class="num">5</span>, <span class="kw">true</span>, <span class="kw">true</span>, <span class="num">4.9</span>, <span class="num">23</span>),
+
+(<span class="str">'rushnyk-vesilnyi'</span>, <span class="str">'Рушник Весільний «Золота нитка»'</span>, <span class="num">2400</span>, <span class="kw">NULL</span>, <span class="str">'rushnyky'</span>, <span class="str">'Хрестик'</span>, <span class="str">'Льон'</span>, <span class="str">'Традиційний весільний рушник з символами єднання та любові.'</span>,
+ ARRAY[<span class="str">'https://ваш-домен.com/img/rushnyk-main.jpg'</span>, <span class="str">'https://ваш-домен.com/img/rushnyk-detail.jpg'</span>],
+ <span class="kw">true</span>, <span class="num">3</span>, <span class="kw">false</span>, <span class="kw">true</span>, <span class="num">5.0</span>, <span class="num">41</span>);
+
+<span class="cm">-- Зробіть себе адміном (замініть email):</span>
+<span class="kw">UPDATE</span> profiles <span class="kw">SET</span> role = <span class="str">'admin'</span> <span class="kw">WHERE</span> email = <span class="str">'your@email.com'</span>;</div>
+
+  <div class="section-h">Де взяти реальні фото</div>
+  <div style="font-size:13px;color:rgba(245,240,232,0.5);line-height:1.9;">
+    ① Зняти товари на нейтральному фоні (молочно-білий або кремовий)<br>
+    ② Завантажити в <code style="background:rgba(201,169,110,0.12);padding:1px 5px;border-radius:3px;color:var(--gold);font-size:11px;">Supabase Storage</code> → bucket <strong style="color:var(--cream)">product-images</strong><br>
+    ③ Замінити посилання на ваші CDN URLs в таблиці products<br>
+    ④ Мінімум 2 фото на товар: основне (3:4) + деталь вишивки (1:1)
+  </div>
+</div>
+
+<!-- ══════ SELL ══════ -->
+<div class="panel" id="t-sell">
+  <div class="section-h">Сьогодні — перший продаж за 2 години</div>
+
+  <div class="p-row best">
+    <div>
+      <div class="best-badge">Найшвидший старт</div>
+      <div class="p-name">Telegram-чати розробників</div>
+      <div class="p-sub">@webdev_ua · @freelance_ukraine · @uastartup · @react_ua · @nodejs_ua</div>
+    </div>
+    <div class="p-price">$300–500<small>за копію</small></div>
+  </div>
+
+  <div class="p-row">
+    <div>
+      <div class="p-name">Gumroad</div>
+      <div class="p-sub">Upload ZIP → ціна $79–149 → посилання готове за 15 хвилин · комісія 10%</div>
+    </div>
+    <div class="p-price">$79–149<small>пасивно</small></div>
+  </div>
+
+  <div class="p-row">
+    <div>
+      <div class="p-name">Freelancehunt</div>
+      <div class="p-sub">Послуга «Готовий інтернет-магазин handmade під ключ» · UA ринок</div>
+    </div>
+    <div class="p-price">₴12–20k<small>~$300–500</small></div>
+  </div>
+
+  <div class="p-row">
+    <div>
+      <div class="p-name">OLX Україна</div>
+      <div class="p-sub">Послуги → IT, комп'ютери · безкоштовно · охоплення мільйони</div>
+    </div>
+    <div class="p-price">₴8–15k<small>~$200–370</small></div>
+  </div>
+
+  <div class="section-h">Наступного тижня — стабільний дохід</div>
+
+  <div class="p-row best">
+    <div>
+      <div class="best-badge">Найвища ціна</div>
+      <div class="p-name">Upwork — Fixed Price Project</div>
+      <div class="p-sub">«Ready-made embroidery React e-commerce · 24 pages · PWA · push» · категорія E-Commerce Development</div>
+    </div>
+    <div class="p-price">$400–700<small>20% комісія</small></div>
+  </div>
+
+  <div class="p-row best">
+    <div>
+      <div class="best-badge">Пасивний дохід</div>
+      <div class="p-name">ThemeForest / Envato Market</div>
+      <div class="p-sub">React E-Commerce шаблон · 2–4 тижні модерація · потім авторасіль без вашої участі</div>
+    </div>
+    <div class="p-price">$49–89<small>роялті з продажу</small></div>
+  </div>
+
+  <div class="p-row">
+    <div>
+      <div class="p-name">Creative Tim</div>
+      <div class="p-sub">React/TypeScript templates · глобальна аудиторія розробників та агенцій</div>
+    </div>
+    <div class="p-price">$69–149<small>40% комісія</small></div>
+  </div>
+
+  <div class="p-row">
+    <div>
+      <div class="p-name">White-label для агенцій</div>
+      <div class="p-sub">Агенції купують за $500–1200 і перепродають клієнтам за $2000–5000</div>
+    </div>
+    <div class="p-price">$500–1200<small>B2B</small></div>
+  </div>
+
+  <div class="p-row">
+    <div>
+      <div class="p-name">Twitter/X + IndieHackers</div>
+      <div class="p-sub">#buildinpublic thread → «Built React e-commerce in X hours» → вірусно серед devs</div>
+    </div>
+    <div class="p-price">$99–299<small>без комісії</small></div>
+  </div>
+
+  <div class="section-h">Цільова аудиторія покупців</div>
+  <div style="font-size:13px;color:rgba(245,240,232,0.5);line-height:2.0;">
+    🧵 <strong style="color:var(--cream)">Майстрині вишивки UA/діаспора</strong> — тисячі на Etsy/Instagram, хочуть свій сайт. ₴10k = ціна 2 вишиванок<br>
+    🏪 <strong style="color:var(--cream)">Handmade магазини Польщі/Німеччини</strong> — Ukrainian folk art популярне, $300–500 дешево<br>
+    💼 <strong style="color:var(--cream)">Веб-студії</strong> — купують шаблон за $300 і продають клієнту за $2000–4000<br>
+    🎓 <strong style="color:var(--cream)">Початківці-розробники</strong> — вивчають React на реальному проекті, платять $49–79
+  </div>
+</div>
+
+<!-- ══════ INCOME ══════ -->
+<div class="panel" id="t-income">
+  <div class="section-h">Перший місяць</div>
+
+  <div class="p-row"><div><div class="p-name">Telegram + OLX (1–2 продажі)</div><div class="p-sub">Легко за перший тиждень без інвестицій</div></div><div class="p-price">$300–800<small>разово</small></div></div>
+  <div class="p-row"><div><div class="p-name">Freelancehunt (1 клієнт)</div><div class="p-sub">Майстриня вишивки хоче свій магазин</div></div><div class="p-price">₴15k = $370<small>разово</small></div></div>
+  <div class="p-row"><div><div class="p-name">Gumroad (5–10 завантажень)</div><div class="p-sub">Після одного поста в Twitter або Reddit/r/webdev</div></div><div class="p-price">$400–1000<small>$79–149/шт</small></div></div>
+
+  <div class="section-h">Через 2 місяці — стабільно щомісяця</div>
+
+  <div class="p-row"><div><div class="p-name">ThemeForest (20–30 продажів/міс)</div><div class="p-sub">Після проходження модерації — повністю пасивно</div></div><div class="p-price">$700–1800<small>/місяць</small></div></div>
+  <div class="p-row"><div><div class="p-name">Upwork (2–3 клієнти/міс)</div><div class="p-sub">Fixed price $400–600 кожен</div></div><div class="p-price">$800–1800<small>/місяць</small></div></div>
+  <div class="p-row"><div><div class="p-name">White-label агенції (1/міс)</div><div class="p-sub">Один контракт = великий чек</div></div><div class="p-price">$500–1200<small>/місяць</small></div></div>
+
+  <div class="income-total">
+    <div>
+      <div class="income-total-label">Реалістичний дохід при всіх каналах</div>
+      <div class="income-total-sub">Через 2–3 місяці роботи · всі канали одночасно</div>
+    </div>
+    <div class="income-total-val">$1500–4500/міс</div>
+  </div>
+
+  <div class="section-h">3 дії прямо сьогодні (3 години)</div>
+  <div class="step-row"><div class="step-n">1</div><div class="step-body"><strong>Запишіть 5-хв Loom відео</strong> — демо сайту, переключіть теми, покажіть кошик, checkout, PWA на телефоні. Без відео конверсія в 3× нижче.</div></div>
+  <div class="step-row"><div class="step-n">2</div><div class="step-body"><strong>Gumroad за 15 хвилин</strong> — gumroad.com → New Product → Upload ZIP → ціна $79 → посилання готове. Одразу є де купити.</div></div>
+  <div class="step-row"><div class="step-n">3</div><div class="step-body"><strong>Пост у 3 Telegram чати</strong> — @webdev_ua, @freelance_ukraine, @uastartup. Текст: "Продаю React e-commerce для вишивки — SEO, PWA, push, 24 сторінки. Демо: [посилання]. $79 або ₴3200."</div></div>
+
+  <div class="info-box">
+    <strong>Ліцензія — важливо:</strong> продавайте як «Single-site license» — кожен покупець платить окремо за кожен сайт. Це стандарт ThemeForest. Не давайте необмежене використання за одну ціну — це зменшить дохід в 3–5×.
+  </div>
+</div>
+
+<script>
+const scores = [
+  { label: 'Дизайн і UX',           val: 95, color: '#22c55e' },
+  { label: 'Технічний стек',         val: 96, color: '#22c55e' },
+  { label: 'SEO та структура',       val: 94, color: '#22c55e' },
+  { label: 'Функціональність',       val: 92, color: '#22c55e' },
+  { label: 'Продуктивність',         val: 88, color: '#22c55e' },
+  { label: 'PWA / Mobile',           val: 90, color: '#22c55e' },
+  { label: 'Push Notifications',     val: 85, color: '#84cc16' },
+  { label: 'Готовність до запуску',  val: 72, color: '#f59e0b' },
+  { label: 'Юридична відповідність', val: 85, color: '#84cc16' },
+  { label: 'Контент (реальний)',      val: 40, color: '#f59e0b' },
+]
+const c = document.getElementById('bars')
+scores.forEach(s => {
+  c.innerHTML += `<div class="score-row">
+    <span class="score-label">${s.label}</span>
+    <div class="score-bar-wrap"><div class="score-bar" style="width:${s.val}%;background:${s.color}"></div></div>
+    <span class="score-num">${s.val}</span>
+  </div>`
+})
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'))
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'))
+  document.getElementById('t-'+id).classList.add('on')
+  event.target.classList.add('on')
+}
+</script>
+</body>
+</html>

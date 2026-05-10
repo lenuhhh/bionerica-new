@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap');
+:root{--g:#c9a96e;--gl:#e2c48a;--d:#1a1612;--dd:#14120e;--c:rgba(245,240,232,0.88);--c2:rgba(245,240,232,0.5);--c3:rgba(245,240,232,0.22);--bd:rgba(201,169,110,0.2);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0f0e0b;font-family:'Jost',sans-serif;color:var(--c2);padding:0 0 80px;}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;}
+
+/* HEADER */
+.header{background:var(--d);border-bottom:1px solid var(--bd);padding:28px 0;}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--c);letter-spacing:3px;}
+.logo span{color:var(--g);}
+.header-sub{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--c2);}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--bd);padding-top:28px;overflow-x:auto;}
+.tab{padding:10px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:none;background:none;color:var(--c3);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap;font-family:'Jost',sans-serif;}
+.tab.on{color:var(--g);border-bottom-color:var(--g);}
+.panel{display:none;padding-top:28px;}
+.panel.on{display:block;}
+
+/* SECTION */
+.sh{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--g);margin:24px 0 12px;display:flex;align-items:center;gap:10px;}
+.sh::after{content:'';flex:1;height:1px;background:var(--bd);}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--c);line-height:1.15;margin-bottom:6px;}
+.stitle em{font-style:italic;color:var(--gl);}
+
+/* TIER CARDS */
+.tier{background:var(--d);border:1px solid var(--bd);padding:20px;margin-bottom:10px;}
+.tier.best{border-color:rgba(201,169,110,0.55);}
+.tier-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px;}
+.tier-name{font-size:15px;font-weight:500;color:var(--c);}
+.tier-sub{font-size:11px;color:var(--c3);margin-top:3px;}
+.tier-price{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--c);text-align:right;flex-shrink:0;}
+.tier-price small{display:block;font-size:12px;color:var(--c3);font-weight:300;}
+.tier-body{font-size:12px;color:var(--c2);line-height:1.8;}
+.badge{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;display:inline-block;margin-bottom:8px;}
+.b-warm{background:rgba(201,169,110,0.12);color:var(--g);}
+.b-green{background:rgba(74,222,128,0.1);color:#4ade80;}
+.b-blue{background:rgba(96,165,250,0.1);color:#60a5fa;}
+
+/* POST BOX */
+.post-wrap{background:var(--d);border:1px solid var(--bd);padding:22px;}
+.platform-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bd);}
+.platform-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(201,169,110,0.1);border:1px solid var(--bd);}
+.platform-name{font-size:12px;font-weight:500;color:var(--c);}
+.platform-sub{font-size:10px;color:var(--c3);}
+.post-text{font-size:13px;line-height:1.9;color:var(--c2);white-space:pre-wrap;font-family:'Jost',sans-serif;}
+.post-text b{color:var(--c);font-weight:500;}
+.post-text .gold{color:var(--g);}
+
+/* COPY BUTTON */
+.copy-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.copy-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;background:none;border:1px solid var(--bd);color:var(--c2);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;transition:all .2s;}
+.copy-btn:hover{background:rgba(201,169,110,0.08);border-color:rgba(201,169,110,0.45);color:var(--g);}
+.copy-btn.ok{border-color:#4ade80;color:#4ade80;}
+.copy-btn svg{width:13px;height:13px;flex-shrink:0;}
+
+/* DIVIDER */
+.orn{display:flex;align-items:center;gap:14px;margin:28px 0;}
+.orn::before,.orn::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--bd));}
+.orn::after{transform:scaleX(-1);}
+.orn span{font-size:11px;color:var(--g);letter-spacing:4px;}
+
+/* INFO BOX */
+.infobox{padding:14px 18px;font-size:12px;line-height:1.7;border-radius:0;}
+.infobox.warn{background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);color:#fbbf24;}
+.infobox.info{background:rgba(201,169,110,0.07);border:1px solid var(--bd);color:var(--g);}
+.infobox.ok{background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.2);color:#4ade80;}
+
+/* TABLE */
+.table{width:100%;border-collapse:collapse;font-size:12px;}
+.table th{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--g);padding:8px 12px;text-align:left;border-bottom:1px solid var(--bd);}
+.table td{padding:10px 12px;border-bottom:1px solid rgba(201,169,110,0.08);color:var(--c2);line-height:1.5;}
+.table td:first-child{color:var(--c);}
+.table td.yes{color:#4ade80;}
+.table td.hi{color:var(--g);font-weight:500;}
+.table tr:last-child td{border-bottom:none;}
+
+.mt8{margin-top:8px;} .mt16{margin-top:16px;} .mt24{margin-top:24px;} .mt32{margin-top:32px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="wrap">
+    <div>
+      <div class="logo">B r o i d e r i e <span>·</span> Цінова стратегія</div>
+    </div>
+    <div class="header-sub">Продаємо правильно · Більше заробляємо</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab on" onclick="show('strategy')">📊 Стратегія</button>
+    <button class="tab" onclick="show('olx')">OLX ₴20k</button>
+    <button class="tab" onclick="show('tg-masters')">TG Майстрині</button>
+    <button class="tab" onclick="show('tg-devs')">TG Девам</button>
+    <button class="tab" onclick="show('upwork')">Upwork $500</button>
+  </div>
+
+  <!-- ══ STRATEGY ══ -->
+  <div class="panel on" id="p-strategy">
+    <div class="stitle">Три ціни —<br><em>три аудиторії</em></div>
+    <p style="font-size:13px;color:var(--c2);line-height:1.8;margin:8px 0 20px;">Одне й те саме — але упаковане по-різному для кожного каналу. Технар купить шаблон за ₴8k, майстриня — «живий сайт» за ₴20k, агенція — кастом за $700.</p>
+
+    <div class="tier">
+      <div class="tier-top">
+        <div>
+          <div class="badge b-warm">Gumroad · ThemeForest · Dev-чати</div>
+          <div class="tier-name">Рівень 1 — Шаблон</div>
+          <div class="tier-sub">Для розробників і технічних покупців</div>
+        </div>
+        <div class="tier-price">$150–200<small>₴6 000–8 000</small></div>
+      </div>
+      <div class="tier-body">ZIP + README + SETUP.md. Покупець сам розбирається. Масовий продаж без вашого часу.</div>
+    </div>
+
+    <div class="tier best">
+      <div class="tier-top">
+        <div>
+          <div class="badge b-green">OLX · Telegram (майстрині) · Freelancehunt</div>
+          <div class="tier-name">Рівень 2 — Сайт під ключ ⭐</div>
+          <div class="tier-sub">Для майстринь, ФОП, малого бізнесу — не технарів</div>
+        </div>
+        <div class="tier-price">₴18 000–22 000<small>$450–550</small></div>
+      </div>
+      <div class="tier-body">ZIP + ви підключаєте Supabase + завантажуєте їх товари + деплой + домен + 14 днів підтримки. <strong style="color:var(--c);">~5 год вашого часу = ₴20 000 = ₴4 000/год.</strong></div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-top">
+        <div>
+          <div class="badge b-blue">Upwork · LinkedIn · Агенції</div>
+          <div class="tier-name">Рівень 3 — Кастом</div>
+          <div class="tier-sub">Зміна бренду, контенту, кольорів, інтеграцій</div>
+        </div>
+        <div class="tier-price">$500–700<small>₴20 000–28 000</small></div>
+      </div>
+      <div class="tier-body">Шаблон як база + 8–12 год кастомізації: ваш логотип, кольори, тексти, фото. Агенції перепродають клієнту за $2 000–5 000.</div>
+    </div>
+
+    <div class="orn mt24"><span>✦</span></div>
+
+    <div class="sh">Чому ₴20k — це нормально і реалістично</div>
+    <table class="table mt8">
+      <thead><tr><th>Порівняння</th><th>Ціна</th><th>Термін</th></tr></thead>
+      <tbody>
+        <tr><td>Студія зробить те саме</td><td style="color:#f87171;">₴80 000–150 000</td><td style="color:var(--c2);">3–5 місяців</td></tr>
+        <tr><td>Фрілансер з Upwork</td><td style="color:#fbbf24;">₴40 000–80 000</td><td style="color:var(--c2);">2–3 місяці</td></tr>
+        <tr><td>Prom.ua (підписка)</td><td style="color:var(--c2);">₴2 500–5 000/міс</td><td style="color:var(--c2);">Щомісяця назавжди</td></tr>
+        <tr><td>Etsy комісія (6.5%)</td><td style="color:var(--c2);">₴650 з кожних ₴10 000</td><td style="color:var(--c2);">Щопродажу</td></tr>
+        <tr><td class="hi">Broiderie під ключ</td><td class="yes">₴20 000 одноразово</td><td class="yes">2–3 дні</td></tr>
+      </tbody>
+    </table>
+
+    <div class="infobox info mt16">
+      💡 <strong>Аргумент для клієнта:</strong> «Сайт окупиться після 15–20 замовлень. Якщо ваш середній чек ₴3 000, то після 7 продажів — мінус Etsy-комісія — сайт вже окупився.»
+    </div>
+
+    <div class="sh mt24">Що включати щоб ₴20k виглядали як вигідна угода</div>
+    <div style="font-size:13px;color:var(--c2);line-height:1.9;">
+      ✅ Підключення Supabase і Google OAuth<br>
+      ✅ Завантаження 10–20 товарів клієнта<br>
+      ✅ Налаштування LiqPay або WayForPay<br>
+      ✅ Деплой на Vercel (або хостинг клієнта)<br>
+      ✅ Підключення домену (або допомога з купівлею)<br>
+      ✅ Короткий відеоурок «як додавати товари в адмінці»<br>
+      ✅ Підтримка 14 днів у Telegram<br>
+      <br>
+      <strong style="color:var(--c);">Реальний час: 4–6 годин. Оцінка клієнтом: «тижень роботи».</strong>
+    </div>
+  </div>
+
+  <!-- ══ OLX ══ -->
+  <div class="panel" id="p-olx">
+    <div class="stitle">Оголошення OLX<br><em>₴20 000</em></div>
+    <p style="font-size:12px;color:var(--c3);margin:6px 0 20px;">Розділ: Послуги → Комп'ютери, інтернет → Розробка сайтів</p>
+
+    <div class="infobox warn mb" style="margin-bottom:14px;">
+      ⚠️ На OLX НЕ пишіть «React», «TypeScript», «Supabase» — клієнт не розуміє. Тільки: «живий сайт», «приймає оплату», «2–3 дні». Говоріть мовою результату.
+    </div>
+
+    <div class="post-wrap">
+      <div class="platform-row">
+        <div class="platform-icon">🟦</div>
+        <div><div class="platform-name">OLX Україна</div><div class="platform-sub">Послуги → Комп'ютери, інтернет · Заголовок до 70 символів</div></div>
+      </div>
+      <div class="post-text" id="olx1"><b>ЗАГОЛОВОК:</b>
+Інтернет-магазин для вишивки та handmade під ключ — ₴20 000
+
+<b>─────────────────────────────────</b>
+<b>ТЕКСТ ОГОЛОШЕННЯ:</b>
+
+🪡 Зроблю готовий сайт-магазин для майстрів вишивки, рушників і handmade — під ключ, за 2–3 дні.
+
+<b>Що ви отримаєте:</b>
+• Власний сайт з вашими товарами та фото
+• Онлайн-оплата (LiqPay, Monobank, WayForPay)
+• Кошик і особистий кабінет для ваших клієнтів
+• Мобільна версія — виглядає ідеально на телефоні
+• Сайт встановлюється як додаток на телефон покупця
+• Сповіщення клієнтам: «ваше замовлення відправлено»
+• Каталог з фільтрами, пошуком і сортуванням
+• Блог для залучення клієнтів через Google
+• Темна і світла тема на вибір
+• Адмін-панель — самостійно додаєте нові товари
+• Юридичні сторінки (Privacy Policy, Умови)
+• Підтримка 14 днів після здачі
+
+<b>Як це працює:</b>
+1. Ви надсилаєте фото та описи товарів
+2. Я все налаштовую — сайт, оплату, домен
+3. Ви отримуєте готовий магазин і починаєте продавати
+
+<b>Вартість: ₴20 000</b>
+Включає: сайт + підключення оплати + домен 1 рік + хостинг 1 рік + підтримка 14 днів
+
+Замовити у студії те саме — ₴80 000–150 000 і 3–4 місяці.
+Тут ви отримуєте готове за 2–3 дні.
+
+📲 Телефонуйте або пишіть у Viber/Telegram
+Покажу живий приклад сайту на запит</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('olx1',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати OLX текст
+        </button>
+      </div>
+    </div>
+
+    <div class="infobox ok mt16">
+      ✅ Порада: поставте ціну ₴19 500 замість ₴20 000 — психологічно сприймається дешевше, але на переговорах легко піднімаєте до ₴20 000 або ₴21 000 якщо потрібно більше послуг.
+    </div>
+
+    <div class="sh mt24">Ціновий діапазон на OLX (залежно від обсягу)</div>
+    <table class="table">
+      <thead><tr><th>Пакет</th><th>Ціна</th><th>Що включено</th></tr></thead>
+      <tbody>
+        <tr><td>Базовий</td><td class="hi">₴14 000</td><td>Сайт + деплой + 7 днів підтримки</td></tr>
+        <tr><td>Стандартний</td><td class="hi">₴18 000–20 000</td><td>+ домен + LiqPay + 14 днів підтримки</td></tr>
+        <tr><td>Преміум</td><td class="hi">₴24 000–28 000</td><td>+ 30 товарів + фото-обробка + місяць підтримки</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ TG MASTERS ══ -->
+  <div class="panel" id="p-tg-masters">
+    <div class="stitle">Telegram для майстринь<br><em>і handmade продавців</em></div>
+    <p style="font-size:12px;color:var(--c3);margin:6px 0 16px;">Чати: @vyshyvanka_ua · @handmade_ukraine · @rukodillia · @majstri_ua · @biznes_bez_ofisu</p>
+
+    <div class="infobox warn" style="margin-bottom:14px;">
+      ⚠️ Тут клієнти — майстрині, НЕ розробники. Жодних технічних термінів. Лише: «ваш сайт», «ваші клієнти», «ваші замовлення».
+    </div>
+
+    <div class="post-wrap">
+      <div class="platform-row">
+        <div class="platform-icon">✈️</div>
+        <div><div class="platform-name">Telegram — чати майстринь</div><div class="platform-sub">₴18 000–22 000 · Оффер «під ключ»</div></div>
+      </div>
+      <div class="post-text" id="tg1">🪡 <b>Хочете власний сайт-магазин замість Instagram?</b>
+
+Роблю готовий інтернет-магазин для майстрів вишивки та handmade. Ви отримуєте повністю готовий сайт — без жодних технічних знань з вашого боку.
+
+<b>Що отримаєте:</b>
+✅ Власний красивий сайт з вашими товарами
+✅ Клієнти оплачують прямо на сайті (Monobank, LiqPay)
+✅ Сайт встановлюється як додаток на телефон покупця
+✅ Клієнт автоматично отримує сповіщення про замовлення
+✅ Каталог, фільтри, пошук — все як у великих магазинів
+✅ Адмін-панель — самі додаєте нові вироби
+✅ Виглядає однаково добре на телефоні та комп'ютері
+
+<b>Як це відбувається:</b>
+— Ви надсилаєте мені фото і описи своїх виробів
+— Я все налаштовую протягом 2–3 днів
+— Ви отримуєте готовий сайт і починаєте продавати
+
+<b>💰 Вартість: ₴18 000–22 000</b>
+(залежить від кількості виробів та додаткових налаштувань)
+Включає: сайт + оплата + домен + 14 днів підтримки
+
+<b>Чому вигідно:</b>
+На Etsy ви платите 6.5% з кожного продажу вічно.
+Тут — одноразово ₴20 000 і сайт ваш назавжди.
+При обороті ₴30 000/міс — окупається за 1 місяць.
+
+Показую живий приклад сайту — пишіть 👇
+📩 @ВАШ_НІК</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('tg1',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати (майстрині)
+        </button>
+      </div>
+    </div>
+
+    <div class="sh mt24">Короткий варіант (для коментарів)</div>
+    <div class="post-wrap">
+      <div class="post-text" id="tg1s">🪡 Роблю сайти-магазини для майстрів вишивки під ключ. ₴20 000 — отримуєте готовий сайт з оплатою за 2–3 дні. Показую демо в особистих. @ВАШ_НІК</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('tg1s',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати (короткий)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TG DEVS ══ -->
+  <div class="panel" id="p-tg-devs">
+    <div class="stitle">Telegram для розробників<br><em>і фрілансерів</em></div>
+    <p style="font-size:12px;color:var(--c3);margin:6px 0 16px;">Чати: @webdev_ua · @freelance_ukraine · @uastartup · @react_ua · @nodejs_ua · @vue_ukraine · @typescript_ua</p>
+
+    <div class="infobox info" style="margin-bottom:14px;">
+      💡 Тут покупці — технарі. Можна і треба писати: React, TypeScript, Supabase. Вони оцінять якість стека. Ціна нижча ($200), але продаєте масово без вашого часу.
+    </div>
+
+    <div class="post-wrap">
+      <div class="platform-row">
+        <div class="platform-icon">⚡</div>
+        <div><div class="platform-name">Telegram — dev чати</div><div class="platform-sub">₴8 000 (шаблон) · ₴15 000 (з деплоєм)</div></div>
+      </div>
+      <div class="post-text" id="tg2">⚡ <b>Продаю React e-commerce шаблон — handmade/вишивка нішка</b>
+
+<b>Стек:</b>
+React 18 · TypeScript · Vite · Supabase · Zustand · Framer Motion · Tailwind CSS · React Hook Form
+
+<b>В коробці:</b>
+→ 24 повністю готові сторінки
+→ Supabase Auth + Google OAuth + RLS policies
+→ PWA + Service Worker + Web Push API (з категоріями)
+→ 5 UA платіжок (LiqPay, WayForPay, Mono, Приват24, COD)
+→ Промокоди + loyalty points + referral (5% від першої покупки)
+→ Infinite scroll (IntersectionObserver, 8 товарів/batch)
+→ SEO + JSON-LD (Product, Article, Organization, BreadcrumbList)
+→ Dark/light/system theme — без flash (inline script)
+→ 21 GPU CSS-анімація (particle burst, shimmer, crossfade, corner frames...)
+→ Таймер акцій (flip-анімація), Social Share (5 платформ + OG preview)
+→ Lookbook (masonry + lightbox), FAQ (акордеон + пошук)
+→ supabase-schema.sql (7 таблиць, тригери, RLS) + seed SQL
+→ SETUP.md — deploy за 30 хвилин
+
+<b>Lighthouse: ~90+</b> (code splitting, lazy images, критичний CSS)
+
+<b>💰 Ціни:</b>
+₴8 000 / $200 — ZIP + README (single-site license)
+₴15 000 / $380 — + я підключаю Supabase + деплой Vercel + 7 днів підтримки
+
+Демо / питання → @ВАШ_НІК</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('tg2',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати (девам)
+        </button>
+      </div>
+    </div>
+
+    <div class="sh mt24">Flash-пост для будь-якого чату</div>
+    <div class="post-wrap">
+      <div class="post-text" id="tg2s">🛍 Продаю React e-commerce для вишивки/handmade
+
+✅ 24 стор · React 18 + TypeScript · Supabase
+✅ PWA + Push + 5 платіжок + SEO + dark theme
+✅ Запуск за 30 хв (є SETUP.md)
+
+💰 Шаблон (ZIP) — ₴8 000 / $200
+💰 Під ключ (деплой + налаштування) — ₴20 000 / $500
+
+@ВАШ_НІК</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('tg2s',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати (flash)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ UPWORK ══ -->
+  <div class="panel" id="p-upwork">
+    <div class="stitle">Upwork<br><em>$400–700</em></div>
+    <p style="font-size:12px;color:var(--c3);margin:6px 0 16px;">Fixed-Price · категорія: Web Development → E-Commerce Development · або відповідь на запити</p>
+
+    <div class="infobox info" style="margin-bottom:14px;">
+      💡 На Upwork пишіть по-англійськи. Клієнт з Канади або Польщі сплатить $500 без торгів — для них це дуже дешево за готовий магазин.
+    </div>
+
+    <div class="post-wrap">
+      <div class="platform-row">
+        <div class="platform-icon">💼</div>
+        <div><div class="platform-name">Upwork Fixed-Price Project</div><div class="platform-sub">$400–700 · English · категорія E-Commerce</div></div>
+      </div>
+      <div class="post-text" id="upwork1"><b>TITLE:</b>
+Ready-Made Embroidery/Handmade E-Commerce — React 18, PWA, Supabase, 24 Pages
+
+<b>─────────────────────────────────</b>
+<b>DESCRIPTION:</b>
+
+I'm selling a fully-featured, production-ready e-commerce template for Ukrainian embroidery and handmade artisans — built with a modern stack and deployable in 30 minutes.
+
+<b>What's included:</b>
+✦ 24 complete pages: catalog, product, cart, checkout, account, blog, lookbook, FAQ, partners, privacy, terms, admin panel and more
+✦ React 18 + TypeScript + Vite — fast, scalable, production-grade
+✦ Supabase backend: auth, database (7 tables), storage, RLS security policies
+✦ Google OAuth one-click login + email/password
+✦ PWA — installable as native app on iOS and Android
+✦ Web Push Notifications: order status, promos, wishlist price drops, cart reminders
+✦ Full checkout with 5 payment methods (Ukrainian: LiqPay, WayForPay, Monobank, Privat24, COD)
+✦ Promo codes + loyalty points + referral program (5% of referred purchase)
+✦ SEO-ready: meta tags, Open Graph, JSON-LD structured data (Product, Article, Organization, BreadcrumbList), sitemap.xml
+✦ Dark / Light / System theme — no flash on load
+✦ 21 GPU-only CSS animations: particle burst, shimmer sweep, image crossfade, corner frames, infinite scroll...
+✦ Social Share with OG preview (Telegram, Instagram, Facebook, Twitter/X, Viber)
+✦ Countdown timer with flip animation (+15–25% conversion)
+✦ supabase-schema.sql (7 tables, triggers, RLS) + full seed data (12 products, 13 reviews, 4 blog posts)
+✦ SETUP.md guide — launch in 30 minutes
+
+<b>Pricing tiers:</b>
+$200 — Source code ZIP + README (single-site license)
+$400 — ZIP + I connect Supabase + deploy to Vercel + 7-day support
+$700 — ZIP + full setup + custom branding (logo, colors, content, your products)
+
+Delivery: 24–48 hours. Single-site license. No recurring fees.
+
+<b>Why buy instead of building?</b>
+A development agency would charge $8,000–15,000 for the same result. You get it for $400 — fully working, properly coded, ready to generate revenue.
+
+Questions? Message me — I'll show you a live demo.</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('upwork1',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати Upwork текст
+        </button>
+      </div>
+    </div>
+
+    <div class="sh mt24">Відповідь на чужий Upwork-запит</div>
+    <div class="post-wrap">
+      <div class="post-text" id="upwork2">Hi! I have exactly what you're looking for — a ready-made e-commerce solution that can be deployed and customized for your needs within 48 hours.
+
+It includes: full React 18 + TypeScript codebase, Supabase backend with authentication, PWA support (iOS/Android installable), checkout with multiple payment methods, admin panel, and 24 complete pages.
+
+I can either deliver the source code for you to customize, or handle the full deployment and customization myself.
+
+Could you share more details about your specific requirements? I'll provide a tailored quote and show you a live demo.
+
+Best regards</div>
+      <div class="copy-row">
+        <button class="copy-btn" onclick="cp('upwork2',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Копіювати відповідь
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  event.target.classList.add('on');
+}
+function cp(id,btn){
+  navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>{
+    const orig=btn.innerHTML;
+    btn.classList.add('ok');
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> Скопійовано!';
+    setTimeout(()=>{btn.classList.remove('ok');btn.innerHTML=orig;},2500);
+  });
+}
+</script>
+</body>
+</html>

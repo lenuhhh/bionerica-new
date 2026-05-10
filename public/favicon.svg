@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6abd5e"/>
+      <stop offset="100%" stop-color="#2d6b24"/>
+    </linearGradient>
+    <linearGradient id="leafg" x1="0%" y1="0%" x2="60%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#e0f5db" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect width="32" height="32" rx="8" fill="url(#bg)"/>
+
+  <!-- Subtle inner glow ring -->
+  <rect width="32" height="32" rx="8" fill="none" stroke="white" stroke-width="0.6" opacity="0.15"/>
+
+  <!-- Main large leaf -->
+  <path d="M16 27.5 C9 24 7 15 11 8.5 C13 5.5 17.5 5 20.5 8 C24.5 12.5 22 24.5 16 27.5Z"
+        fill="url(#leafg)"/>
+
+  <!-- Leaf center vein -->
+  <path d="M16 26 C14.5 21 14 15 15 9.5"
+        fill="none" stroke="#3a8030" stroke-width="0.9" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- Left side veins -->
+  <path d="M15 20 C12.5 18.5 11 16 11.5 14"
+        fill="none" stroke="#3a8030" stroke-width="0.55" stroke-linecap="round" opacity="0.25"/>
+  <path d="M15 23.5 C12 22 10.5 19.5 11 17.5"
+        fill="none" stroke="#3a8030" stroke-width="0.45" stroke-linecap="round" opacity="0.2"/>
+
+  <!-- Right side veins -->
+  <path d="M16.5 18 C19 16.5 20.5 14.5 20 12"
+        fill="none" stroke="#3a8030" stroke-width="0.55" stroke-linecap="round" opacity="0.25"/>
+
+  <!-- Small accent leaf (right branch) -->
+  <path d="M17.5 14.5 C20 11 25 10.5 25.5 14.5 C22 16.5 17.5 14.5Z"
+        fill="white" opacity="0.6"/>
+
+  <!-- Tiny dot accent -->
+  <circle cx="23" cy="24" r="1.3" fill="white" opacity="0.3"/>
+</svg>

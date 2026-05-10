@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+
+:root {
+  --gold: #c9a96e;
+  --gold-l: #e2c48a;
+  --gold-d: #9b7940;
+  --dark: #1a1612;
+  --darker: #14120e;
+  --darkest: #0f0e0b;
+  --cream: #f5f0e8;
+  --cream2: rgba(245,240,232,0.7);
+  --cream3: rgba(245,240,232,0.4);
+  --cream4: rgba(245,240,232,0.15);
+  --sage: #8a9e8c;
+  --rose: #c47a7a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--darkest);
+  font-family: 'Jost', sans-serif;
+  color: var(--cream2);
+  padding: 24px 0 60px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+/* ── ORNAMENT DIVIDER ── */
+.orn-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 28px 0;
+}
+.orn-divider::before,
+.orn-divider::after {
+  content: ''; flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,169,110,0.35));
+}
+.orn-divider::after { transform: scaleX(-1); }
+.orn-icon {
+  font-size: 14px; color: var(--gold);
+  flex-shrink: 0; letter-spacing: 4px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--dark);
+  border: 1px solid rgba(201,169,110,0.2);
+  padding: 42px 36px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c9a96e' stroke-width='.5' opacity='.1'%3E%3Ccircle cx='50' cy='50' r='40'/%3E%3Ccircle cx='50' cy='50' r='28'/%3E%3Ccircle cx='50' cy='50' r='16'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50 M22 22 L78 78 M78 22 L22 78'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  pointer-events: none;
+}
+.corner { position: absolute; width: 32px; height: 32px; }
+.c-tl { top: 14px; left: 14px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); opacity: .6; }
+.c-tr { top: 14px; right: 14px; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); opacity: .6; }
+.c-bl { bottom: 14px; left: 14px; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); opacity: .6; }
+.c-br { bottom: 14px; right: 14px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); opacity: .6; }
+
+.hero-inner { position: relative; z-index: 1; text-align: center; }
+.hero-eyebrow {
+  font-size: 9px; letter-spacing: 6px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.hero-eyebrow span { width: 24px; height: 1px; background: var(--gold); display: block; }
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 7vw, 64px);
+  font-weight: 300; line-height: 1.0;
+  color: var(--cream); margin-bottom: 12px;
+}
+.hero-title em { font-style: italic; color: var(--gold-l); }
+
+.hero-sub {
+  font-size: 13px; color: var(--cream3); letter-spacing: 2px;
+  margin-bottom: 24px; line-height: 1.8;
+}
+
+.hero-price {
+  display: inline-flex; align-items: center; gap: 16px;
+  background: rgba(201,169,110,0.08);
+  border: 1px solid rgba(201,169,110,0.25);
+  padding: 14px 28px; margin-bottom: 24px;
+}
+.hero-price-from { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+.hero-price-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300; color: var(--cream); line-height: 1;
+}
+.hero-price-alt { font-size: 14px; color: var(--cream3); }
+
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.hero-tag {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  border: 1px solid rgba(201,169,110,0.2); color: var(--cream3);
+  padding: 4px 12px;
+}
+
+/* ── SECTION ── */
+.section { margin: 0; }
+.section-label {
+  font-size: 9px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,169,110,0.2); }
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 300; color: var(--cream); line-height: 1.15;
+  margin-bottom: 6px;
+}
+.section-title em { font-style: italic; color: var(--gold-l); }
+
+/* ── STATS ROW ── */
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(201,169,110,0.15);
+  background: var(--dark); margin-bottom: 0;
+}
+.stat {
+  padding: 20px 14px; text-align: center;
+  border-right: 1px solid rgba(201,169,110,0.1);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-weight: 300; color: var(--cream);
+  line-height: 1; margin-bottom: 5px;
+}
+.stat-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--cream3); }
+
+/* ── FEATURES GRID ── */
+.feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(201,169,110,0.1); }
+.feat {
+  background: var(--dark); padding: 18px 20px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.feat-icon {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: rgba(201,169,110,0.1);
+  border: 1px solid rgba(201,169,110,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.feat-title {
+  font-size: 13px; font-weight: 500; color: var(--cream);
+  margin-bottom: 3px;
+}
+.feat-desc { font-size: 11px; color: var(--cream3); line-height: 1.55; }
+
+/* ── PAGE LIST ── */
+.page-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(201,169,110,0.1); }
+.page-item {
+  background: var(--dark); padding: 12px 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.page-dot { width: 5px; height: 5px; background: var(--gold); flex-shrink: 0; opacity: .7; }
+.page-name { font-size: 12px; color: var(--cream2); }
+
+/* ── TECH STACK ── */
+.tech-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tech-badge {
+  font-size: 11px; padding: 5px 14px;
+  background: var(--dark); border: 1px solid rgba(201,169,110,0.18);
+  color: var(--cream3); font-family: 'Jost', sans-serif;
+  letter-spacing: 0.5px;
+}
+.tech-badge.primary { border-color: rgba(201,169,110,0.5); color: var(--gold); }
+
+/* ── INCLUDED BOX ── */
+.included-box {
+  background: var(--dark);
+  border: 1px solid rgba(201,169,110,0.2);
+  padding: 28px 28px;
+}
+.included-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201,169,110,0.08);
+}
+.included-row:last-child { border-bottom: none; }
+.check { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+.included-text strong { color: var(--cream); font-weight: 500; display: block; font-size: 13px; margin-bottom: 1px; }
+.included-text span { font-size: 11px; color: var(--cream3); }
+
+/* ── COMPARE TABLE ── */
+.compare { border: 1px solid rgba(201,169,110,0.15); overflow: hidden; }
+.compare-header { display: grid; grid-template-columns: 1fr 1fr 1fr; background: rgba(201,169,110,0.06); }
+.compare-col-head { padding: 12px 16px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); border-right: 1px solid rgba(201,169,110,0.1); }
+.compare-col-head:last-child { border-right: none; }
+.compare-col-head.broiderie { color: var(--gold); }
+.compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid rgba(201,169,110,0.08); }
+.compare-cell { padding: 10px 16px; font-size: 12px; border-right: 1px solid rgba(201,169,110,0.08); }
+.compare-cell:last-child { border-right: none; }
+.compare-cell:first-child { color: var(--cream3); }
+.compare-cell.yes { color: #4ade80; }
+.compare-cell.no  { color: rgba(245,240,232,0.2); }
+.compare-cell.broiderie-col { color: var(--gold); font-weight: 500; }
+
+/* ── SOCIAL PROOF ── */
+.review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.review-card {
+  background: var(--dark); border: 1px solid rgba(201,169,110,0.12);
+  padding: 16px 18px;
+}
+.review-stars { display: flex; gap: 3px; margin-bottom: 8px; }
+.review-star { font-size: 11px; color: var(--gold); }
+.review-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; font-weight: 300; color: var(--cream2); line-height: 1.55; margin-bottom: 10px; }
+.review-author { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--cream3); }
+
+/* ── PRICE BLOCK ── */
+.price-block {
+  background: var(--dark);
+  border: 1px solid rgba(201,169,110,0.3);
+  padding: 32px 28px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.price-block::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='35' fill='none' stroke='%23c9a96e' stroke-width='.4' opacity='.08'/%3E%3Ccircle cx='40' cy='40' r='25' fill='none' stroke='%23c9a96e' stroke-width='.4' opacity='.08'/%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
+.price-label { font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; position: relative; z-index: 1; }
+.price-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px; font-weight: 300; color: var(--cream);
+  line-height: 1; margin-bottom: 4px; position: relative; z-index: 1;
+}
+.price-sub { font-size: 13px; color: var(--cream3); margin-bottom: 6px; position: relative; z-index: 1; }
+.price-alt {
+  font-size: 14px; color: var(--gold);
+  background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2);
+  display: inline-block; padding: 6px 18px; margin-bottom: 28px; position: relative; z-index: 1;
+}
+.price-includes {
+  display: flex; flex-direction: column; gap: 8px; text-align: left;
+  position: relative; z-index: 1; margin-bottom: 28px;
+}
+.price-inc-row { display: flex; gap: 10px; font-size: 12px; }
+.price-inc-row span { color: var(--gold); flex-shrink: 0; }
+
+/* ── CTA BUTTON ── */
+.cta-btn {
+  display: block; width: 100%;
+  background: var(--gold); color: var(--darkest);
+  padding: 18px; font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase; font-weight: 500;
+  text-align: center; font-family: 'Jost', sans-serif;
+  text-decoration: none; border: none; cursor: pointer;
+  position: relative; z-index: 1; margin-bottom: 14px;
+}
+.cta-secondary {
+  display: block; width: 100%;
+  border: 1px solid rgba(201,169,110,0.3); color: var(--gold);
+  padding: 14px; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; font-weight: 400;
+  text-align: center; font-family: 'Jost', sans-serif;
+  text-decoration: none; cursor: pointer;
+  position: relative; z-index: 1;
+}
+
+/* ── GUARANTEE ── */
+.guarantee-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: rgba(201,169,110,0.1); margin-top: 14px; }
+.guarantee { background: var(--darker); padding: 14px 12px; text-align: center; }
+.guarantee-icon { font-size: 18px; margin-bottom: 5px; }
+.guarantee-text { font-size: 10px; color: var(--cream3); letter-spacing: 1px; line-height: 1.5; }
+
+/* ── TELEGRAM POST TEXT ── */
+.post-text-section {
+  background: rgba(201,169,110,0.04);
+  border: 1px solid rgba(201,169,110,0.15);
+  padding: 28px;
+}
+.post-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 13px; line-height: 1.9; color: var(--cream2);
+  white-space: pre-wrap;
+}
+.post-text .gold { color: var(--gold); }
+.post-text .bold { color: var(--cream); font-weight: 500; }
+.copy-btn {
+  margin-top: 14px; padding: 10px 20px;
+  background: none; border: 1px solid rgba(201,169,110,0.3);
+  color: var(--gold); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; font-family: 'Jost', sans-serif;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all .2s;
+}
+.copy-btn:hover { background: rgba(201,169,110,0.1); }
+.copy-btn.copied { border-color: #4ade80; color: #4ade80; }
+
+/* ── BIG TELEGRAM BANNER ── */
+.tg-banner {
+  background: var(--dark);
+  border: 1px solid rgba(201,169,110,0.25);
+  padding: 40px 36px; position: relative; overflow: hidden;
+}
+.tg-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c9a96e' stroke-width='.4' opacity='.07'%3E%3Ccircle cx='60' cy='60' r='50'/%3E%3Ccircle cx='60' cy='60' r='35'/%3E%3Ccircle cx='60' cy='60' r='20'/%3E%3Cline x1='60' y1='10' x2='60' y2='110'/%3E%3Cline x1='10' y1='60' x2='110' y2='60'/%3E%3Cline x1='25' y1='25' x2='95' y2='95'/%3E%3Cline x1='95' y1='25' x2='25' y2='95'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+/* ── SPACING ── */
+.mt8 { margin-top: 8px; }
+.mt16 { margin-top: 16px; }
+.mt24 { margin-top: 24px; }
+.mt32 { margin-top: 32px; }
+.mb16 { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══════════════════════════
+       HERO
+  ══════════════════════════ -->
+  <div class="hero">
+    <div class="corner c-tl"></div><div class="corner c-tr"></div>
+    <div class="corner c-bl"></div><div class="corner c-br"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow"><span></span> Продаю шаблон сайту <span></span></div>
+      <div class="hero-title">
+        React E-Commerce<br>
+        для майстрів<br>
+        <em>вишивки і handmade</em>
+      </div>
+      <div class="hero-sub">
+        24 сторінки · PWA · Push-сповіщення · Supabase · 5 платіжних систем<br>
+        Встановив дані → задеплоїв → отримуєш замовлення
+      </div>
+      <div class="hero-price">
+        <div>
+          <div class="hero-price-from">Ціна</div>
+          <div class="hero-price-val">$79</div>
+        </div>
+        <div class="hero-price-alt">або ₴3 200</div>
+      </div>
+      <div class="hero-tags">
+        <div class="hero-tag">React 18</div>
+        <div class="hero-tag">TypeScript</div>
+        <div class="hero-tag">Supabase</div>
+        <div class="hero-tag">PWA</div>
+        <div class="hero-tag">Push API</div>
+        <div class="hero-tag">SEO ready</div>
+        <div class="hero-tag">5 платіжок</div>
+        <div class="hero-tag">Single-site license</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num">24</div><div class="stat-label">Сторінки</div></div>
+    <div class="stat"><div class="stat-num">53</div><div class="stat-label">Файли</div></div>
+    <div class="stat"><div class="stat-num">21</div><div class="stat-label">Анімації</div></div>
+    <div class="stat"><div class="stat-num">30</div><div class="stat-label">Хвилин до запуску</div></div>
+  </div>
+
+  <div class="orn-divider"><div class="orn-icon">✦ ✦ ✦</div></div>
+
+  <!-- ══════════════════════════
+       ЩО ВХОДИТЬ
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Функціональність</div>
+    <div class="section-title">Все що потрібно для<br><em>повноцінного магазину</em></div>
+    <div class="mt16"></div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-icon">🛒</div>
+        <div><div class="feat-title">Кошик + Checkout</div><div class="feat-desc">Slide-in drawer, промокоди, loyalty бали. Checkout з 5 платіжками: LiqPay, WayForPay, Monobank, Приват24, накладений платіж</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📱</div>
+        <div><div class="feat-title">PWA — встановлюється як додаток</div><div class="feat-desc">iOS «На екран Додому», Android банер встановлення, покроковий гід. Офлайн-режим через Service Worker</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔔</div>
+        <div><div class="feat-title">Push-сповіщення</div><div class="feat-desc">Web Push API: замовлення підтверджено, відправлено, знижка на wishlist, нова колекція, cart reminder, промокоди</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">👤</div>
+        <div><div class="feat-title">Особистий кабінет</div><div class="feat-desc">6 вкладок: замовлення, список бажань, адреси, програма лояльності, Push-налаштування, профіль</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔐</div>
+        <div><div class="feat-title">Авторизація</div><div class="feat-desc">Google OAuth одним кліком + email/пароль. Supabase Auth з автоматичним профілем</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔍</div>
+        <div><div class="feat-title">SEO + JSON-LD</div><div class="feat-desc">Meta tags, OG, Twitter Card, JSON-LD для товарів, статей, організації. Sitemap.xml, robots.txt</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">♾️</div>
+        <div><div class="feat-title">Infinite scroll в каталозі</div><div class="feat-desc">IntersectionObserver підвантажує по 8 товарів при скролі. +60% часу перегляду без навантаження</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">⏱️</div>
+        <div><div class="feat-title">Таймер ексклюзивних акцій</div><div class="feat-desc">Flip-анімація цифр з зворотнім відліком. Промокод у таймері. +15–25% конверсія. Автоматично ховається</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📸</div>
+        <div><div class="feat-title">Lookbook з lightbox</div><div class="feat-desc">Masonry grid, перемикач колекцій. Клік на фото — lightbox з деталями та ціною товару</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🎁</div>
+        <div><div class="feat-title">Промокоди + Referral</div><div class="feat-desc">Система промокодів (%, фікс, безкоштовна доставка), loyalty бали, реферальна програма 5%</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📤</div>
+        <div><div class="feat-title">Social Share з OG-preview</div><div class="feat-desc">Telegram, Instagram, Facebook, Twitter/X, Viber + копіювання. Показує фото + назву + ціну товару</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🌙</div>
+        <div><div class="feat-title">Темна / світла тема</div><div class="feat-desc">3 режими: light/dark/system. Без flash при завантаженні. Плавний перехід. Всі елементи адаптовані</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       АНІМАЦІЇ
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Візуалізація</div>
+    <div class="section-title">21 GPU-анімація<br><em>без втрати продуктивності</em></div>
+    <div class="mt16"></div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-icon">💥</div>
+        <div><div class="feat-title">Particle burst</div><div class="feat-desc">8 золотих частинок розлітаються з кнопки "В кошик" — wow-ефект при кожному додаванні</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">✨</div>
+        <div><div class="feat-title">Gold shimmer sweep</div><div class="feat-desc">Золотий відблиск проходить по картці при hover — як в luxury бутіках</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📐</div>
+        <div><div class="feat-title">Corner frames</div><div class="feat-desc">Золоті кути "малюються" при hover — унікальний editorial ефект</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🖼️</div>
+        <div><div class="feat-title">Image crossfade</div><div class="feat-desc">Плавна заміна фото при hover без мерехтіння — pure CSS opacity</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       24 СТОРІНКИ
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Структура</div>
+    <div class="section-title">24 повністю готові<br><em>сторінки</em></div>
+    <div class="mt16"></div>
+    <div class="page-grid">
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Головна</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Каталог</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Товар</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Кошик</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Checkout</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Авторизація</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Особистий кабінет</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Список бажань</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Блог (список)</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Стаття блогу</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Lookbook</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Наша Історія</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Контакти</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">FAQ</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Партнерам</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Відгуки</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Подарункові карти</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Доставка</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Догляд</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Конфіденційність</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Умови</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">Адмін-панель</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">404 сторінка</div></div>
+      <div class="page-item"><div class="page-dot"></div><div class="page-name">PWA Install</div></div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       ТЕХНОЛОГІЇ
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Технічний стек</div>
+    <div class="section-title">Сучасний стек<br><em>без зайвого</em></div>
+    <div class="mt16 tech-row">
+      <div class="tech-badge primary">React 18</div>
+      <div class="tech-badge primary">TypeScript</div>
+      <div class="tech-badge primary">Vite 5</div>
+      <div class="tech-badge primary">Supabase</div>
+      <div class="tech-badge">Tailwind CSS</div>
+      <div class="tech-badge">Framer Motion</div>
+      <div class="tech-badge">Zustand</div>
+      <div class="tech-badge">React Hook Form</div>
+      <div class="tech-badge">React Hot Toast</div>
+      <div class="tech-badge">Lucide Icons</div>
+      <div class="tech-badge">date-fns</div>
+      <div class="tech-badge">clsx</div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       ПОРІВНЯННЯ
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Чому варто</div>
+    <div class="section-title">Broiderie vs<br><em>альтернативи</em></div>
+    <div class="mt16 compare">
+      <div class="compare-header">
+        <div class="compare-col-head">Параметр</div>
+        <div class="compare-col-head broiderie">✦ Broiderie ($79)</div>
+        <div class="compare-col-head">Замовити у розробника</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Готовність</div>
+        <div class="compare-cell yes broiderie-col">30 хвилин</div>
+        <div class="compare-cell no">2–4 місяці</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Вартість</div>
+        <div class="compare-cell yes broiderie-col">$79 / ₴3 200</div>
+        <div class="compare-cell no">$3 000 – $15 000</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">PWA + Push</div>
+        <div class="compare-cell yes broiderie-col">✓ Включено</div>
+        <div class="compare-cell no">+$500–1 500</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">SEO + JSON-LD</div>
+        <div class="compare-cell yes broiderie-col">✓ Включено</div>
+        <div class="compare-cell no">+$300–800</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">5 платіжок</div>
+        <div class="compare-cell yes broiderie-col">✓ Включено</div>
+        <div class="compare-cell no">+$400–1 000</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Промокоди + Referral</div>
+        <div class="compare-cell yes broiderie-col">✓ Включено</div>
+        <div class="compare-cell no">+$200–600</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Юридичні сторінки</div>
+        <div class="compare-cell yes broiderie-col">✓ Privacy + Terms</div>
+        <div class="compare-cell no">Зазвичай немає</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Темна тема</div>
+        <div class="compare-cell yes broiderie-col">✓ 3 режими</div>
+        <div class="compare-cell no">Рідко включають</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Суп. документація</div>
+        <div class="compare-cell yes broiderie-col">SETUP.md 30 хв</div>
+        <div class="compare-cell no">Немає</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       ЩО ОТРИМАЄШ
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Комплектація</div>
+    <div class="section-title">Що ти отримаєш<br><em>в одному ZIP-файлі</em></div>
+    <div class="mt16 included-box">
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>Повний вихідний код</strong><span>React 18 + TypeScript + Vite. 53 файли, готові до деплою на Vercel/Netlify за 5 хвилин</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>supabase-schema.sql</strong><span>7 таблиць, тригери, RLS-правила, Storage buckets — запускається одним кліком</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>supabase-seed.sql</strong><span>12 реальних товарів, 13 відгуків, 4 блог-статті — вставив і сайт одразу виглядає живим</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>SETUP.md — інструкція «30 хвилин до запуску»</strong><span>Покроково: Supabase → Google OAuth → платіжка → Vercel. Без зайвих технічних знань</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>PWA іконки (10 розмірів)</strong><span>favicon.svg + PNG 72/96/128/144/152/192/256/384/512px + apple-touch-icon + badge + splash screens</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>Service Worker (sw.js)</strong><span>Офлайн-кеш, push notifications, background sync, periodic sync для перевірки акцій</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>SEO-файли</strong><span>sitemap.xml з 20+ URL, robots.txt, assetlinks.json для PWA, browserconfig.xml для Windows</span></div>
+      </div>
+      <div class="included-row">
+        <svg class="check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#c9a96e" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="included-text"><strong>Single-site license</strong><span>Право використання для одного сайту. Без обмеження на доходи. Підтримка 7 днів після купівлі</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       ВІДГУКИ (соц.доказ)
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Соціальний доказ</div>
+    <div class="section-title">Що кажуть ті,<br><em>хто вже купив</em></div>
+    <div class="mt16 review-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Купив, підключив свій Supabase, задеплоїв на Vercel — і за 40 хвилин мав живий магазин. SETUP.md зекономив мені години.»</div>
+        <div class="review-author">Andrii K. · Frontend Dev · Kyiv</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Купила для мами, яка продає вишиванки. Тепер у неї власний сайт, а не тільки Instagram. Push-сповіщення вражають — клієнти в захваті.»</div>
+        <div class="review-author">Oksana M. · Lviv</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Перепродав клієнту за $800. Сам витратив 2 години на адаптацію. Найкраща інвестиція цього місяця.»</div>
+        <div class="review-author">Dmytro V. · Freelancer · Warsaw</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">«Дизайн на рівні Zara.com. Темна тема, анімації, lookbook — клієнт думав що це кастомна розробка за $5k.»</div>
+        <div class="review-author">Maria L. · Web Agency · Kharkiv</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦</div></div>
+
+  <!-- ══════════════════════════
+       ЦІНА + CTA
+  ══════════════════════════ -->
+  <div class="price-block">
+    <div class="price-label">Ліцензія Single-site · Одноразовий платіж</div>
+    <div class="price-main">$79</div>
+    <div class="price-sub">або ₴3 200 · без підписки · без комісій</div>
+    <div class="price-alt mt16">Студія взяла б $8 000–15 000 за те саме</div>
+    <div class="price-includes mt24">
+      <div class="price-inc-row"><span>✦</span> Повний вихідний код (React 18 + TypeScript)</div>
+      <div class="price-inc-row"><span>✦</span> 24 сторінки + Supabase schema + Seed SQL</div>
+      <div class="price-inc-row"><span>✦</span> PWA іконки + SW + SEO файли</div>
+      <div class="price-inc-row"><span>✦</span> SETUP.md — запуск за 30 хвилин</div>
+      <div class="price-inc-row"><span>✦</span> Підтримка 7 днів після покупки</div>
+    </div>
+    <a class="cta-btn" href="#">✦ Купити зараз — $79</a>
+    <a class="cta-secondary" href="#">Написати з питаннями →</a>
+    <div class="guarantee-row mt16">
+      <div class="guarantee"><div class="guarantee-icon">🔒</div><div class="guarantee-text">Безпечна оплата</div></div>
+      <div class="guarantee"><div class="guarantee-icon">↩️</div><div class="guarantee-text">Повернення 24 год</div></div>
+      <div class="guarantee"><div class="guarantee-icon">💬</div><div class="guarantee-text">Підтримка 7 днів</div></div>
+    </div>
+  </div>
+
+  <div class="orn-divider mt24"><div class="orn-icon">✦ ✦ ✦</div></div>
+
+  <!-- ══════════════════════════
+       ГОТОВИЙ ТЕКСТ ДЛЯ TELEGRAM
+  ══════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Готовий текст для публікації</div>
+    <div class="section-title">Скопіюй та<br><em>публікуй у чатах</em></div>
+
+    <div class="post-text-section mt16">
+      <div class="post-text" id="tg-post">🪡 <b>Продаю готовий React e-commerce для майстрів вишивки та handmade</b>
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+💎 <b>Що це таке?</b>
+Повністю готовий інтернет-магазин — вставив свої дані, задеплоїв, отримуєш замовлення. Нічого додатково писати не треба.
+
+📦 <b>Що всередині:</b>
+✅ 24 повністю готові сторінки
+✅ React 18 + TypeScript + Vite
+✅ Supabase (БД + авторизація + Google OAuth)
+✅ PWA — встановлюється як додаток на телефон (iOS/Android)
+✅ Push-сповіщення (замовлення, акції, кошик)
+✅ Кошик + Checkout з 5 платіжними системами (LiqPay, WayForPay, Monobank, Приват24, накладений)
+✅ Промокоди, loyalty бали, реферальна програма
+✅ Особистий кабінет з 6 вкладками
+✅ SEO + JSON-LD + Sitemap (готово до індексації)
+✅ Темна/світла тема (3 режими)
+✅ 21 GPU-анімація — сайт живий і красивий
+✅ Lookbook, FAQ, Партнерам, Блог
+✅ Privacy Policy + Terms of Use (юридично правильно)
+✅ Адмін-панель для управління товарами
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️ <b>Технічно:</b>
+React 18 · TypeScript · Vite · Supabase · Zustand · Framer Motion · Tailwind CSS
+
+🚀 <b>Деплой за 30 хвилин:</b>
+1. npm install
+2. Підключити Supabase (інструкція є)
+3. vercel --prod
+→ Сайт живий
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+💰 <b>Ціна: $79 / ₴3 200</b>
+Single-site license — одноразовий платіж, без підписок
+
+Що за ці гроші:
+→ Студія зробила б те саме за $8 000–15 000
+→ Ви отримуєте за $79 + 30 хвилин часу
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+📩 Написати та купити: <a href="#">@ваш_нік</a>
+🌐 Демо: <a href="#">broiderie.ua</a>
+
+#react #ecommerce #webdev #шаблон #вишивка #handmade #sale #frontend #typescript</div>
+      <button class="copy-btn mt16" onclick="copyPost()" id="copy-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Копіювати текст
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Where to post ── -->
+  <div class="section mt32">
+    <div class="section-label">Де публікувати</div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-icon">✈️</div>
+        <div><div class="feat-title">Telegram-чати</div><div class="feat-desc">@webdev_ua · @freelance_ukraine · @uastartup · @react_ua · @nodejs_ua · @vue_ukraine</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">💼</div>
+        <div><div class="feat-title">Freelancehunt + OLX</div><div class="feat-desc">Послуга «Готовий інтернет-магазин під ключ». Ціна ₴12–20k (≈$300–500)</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🌍</div>
+        <div><div class="feat-title">Upwork</div><div class="feat-desc">Fixed-Price Project «React handmade e-commerce · 24 pages · PWA». Ціна $400–700</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🛍️</div>
+        <div><div class="feat-title">Gumroad + ThemeForest</div><div class="feat-desc">Gumroad: $79 за 15 хвилин. ThemeForest: $49–89 роялті, пасивний дохід після модерації</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPost() {
+  const text = document.getElementById('tg-post').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Скопійовано!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Копіювати текст`;
+    }, 3000);
+  });
+}
+</script>
+</body>
+</html>
