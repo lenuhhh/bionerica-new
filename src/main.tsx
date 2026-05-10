@@ -11,38 +11,46 @@ import './styles/app.css'
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     if (import.meta.env.PROD) {
+      let didRefreshAfterUpdate = false
+
       navigator.serviceWorker
-        .register('/sw.js', { scope: '/' })
+        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
         .then(reg => {
           console.log('[SW] Registered, scope:', reg.scope)
 
-          const markUpdateReady = (worker?: ServiceWorker | null) => {
+          const activateUpdateImmediately = (worker?: ServiceWorker | null) => {
             if (!worker) return
-            ;(window as unknown as { __pwaWaitingWorker?: ServiceWorker }).__pwaWaitingWorker = worker
-            window.dispatchEvent(new CustomEvent('pwa-update-ready'))
+            worker.postMessage({ type: 'SKIP_WAITING' })
           }
 
           if (reg.waiting) {
-            markUpdateReady(reg.waiting)
+            activateUpdateImmediately(reg.waiting)
           }
 
-          // Check for updates every 60 minutes
-          setInterval(() => reg.update(), 60 * 60 * 1000)
+          // Check for updates every 15 minutes
+          setInterval(() => reg.update(), 15 * 60 * 1000)
 
-          // Notify user when new version is available
+          // Also check when app becomes active again
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') reg.update()
+          })
+
+          // Auto-apply new version when available
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing
             if (!newWorker) return
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log('[SW] New version available — prompt user to update')
-                markUpdateReady(newWorker)
+                console.log('[SW] New version found — applying automatically')
+                activateUpdateImmediately(newWorker)
               }
             })
           })
 
           navigator.serviceWorker.addEventListener('controllerchange', () => {
-            window.dispatchEvent(new CustomEvent('pwa-updated'))
+            if (didRefreshAfterUpdate) return
+            didRefreshAfterUpdate = true
+            window.location.reload()
           })
         })
         .catch(err => console.warn('[SW] Registration failed:', err))
