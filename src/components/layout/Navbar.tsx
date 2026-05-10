@@ -5,6 +5,7 @@ import { Search, ShoppingBag, Heart, User, X, Menu, LogOut, Settings, Package, C
 import { useCart, useAuth, useWishlist, useUi } from '@/store'
 import { signOut } from '@/lib/supabase'
 import { useSitePresence } from '@/hooks/useSitePresence'
+import { products } from '@/data'
 
 const mainNav = [
   { to: '/catalog', label: 'Каталог', sub: [
@@ -47,9 +48,16 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [mobileAccountOpen, setMobileAccountOpen] = useState(false)
+  const [mobileWishlistOpen, setMobileWishlistOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const { onlineNow } = useSitePresence(user?.id)
+  const wishlistIds = useWishlist(s => s.ids)
+  const wishlistPreview = Array.from(wishlistIds)
+    .map(id => products.find(p => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+    .slice(0, 5)
 
   const smartHubLinks = [
     { to: '/catalog', label: 'До каталогу' },
@@ -369,12 +377,12 @@ export default function Navbar() {
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'tween', duration: 0.32 }}
               className="fixed top-0 left-0 bottom-0 z-[90] flex flex-col"
-              style={{ width: 'min(300px, 85vw)', background: 'var(--b0)', borderRight: '1px solid var(--bd)' }}
+              style={{ width: 'min(272px, 82vw)', background: 'var(--b0)', borderRight: '1px solid var(--bd)' }}
             >
-              <div className="flex items-center justify-between p-6" style={{ borderBottom: '1px solid var(--bd)' }}>
+              <div className="flex items-center justify-between px-4 py-4" style={{ borderBottom: '1px solid var(--bd)' }}>
                 <div className="flex items-center gap-3">
                   <BrandMark />
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, DM Sans, sans-serif', fontSize: 22, fontWeight: 800, letterSpacing: '-0.03em' }}>
+                  <span style={{ fontFamily: 'Plus Jakarta Sans, DM Sans, sans-serif', fontSize: 20, fontWeight: 800, letterSpacing: '-0.03em' }}>
                     Bio<span style={{ color: 'var(--gold)' }}>nerica</span>
                   </span>
                 </div>
@@ -383,26 +391,26 @@ export default function Navbar() {
                 </button>
               </div>
 
-              <nav className="flex-1 overflow-y-auto p-6">
+              <nav className="flex-1 overflow-y-auto px-4 py-4">
                 {mainNav.map(link => (
                   <div key={link.to} className="mb-1">
                     <NavLink to={link.to} onClick={() => setMobileOpen(false)}
                       style={({ isActive }) => ({
                         fontFamily: 'Plus Jakarta Sans, DM Sans, sans-serif',
-                        fontSize: 22,
-                        fontWeight: 700,
+                        fontSize: 18,
+                        fontWeight: 650,
                         color: isActive ? 'var(--t0)' : 'var(--t2)',
                         display: 'block',
-                        paddingBlock: 10,
+                        paddingBlock: 8,
                         borderBottom: '1px solid var(--bd)',
                       })}>
                       {link.label}
                     </NavLink>
                     {link.sub && (
-                      <div className="pl-4">
+                      <div className="pl-3 pb-1">
                         {link.sub.map(s => (
                           <Link key={s.to} to={s.to} onClick={() => setMobileOpen(false)}
-                            className="block py-2 text-[12px] tracking-wide transition-colors"
+                            className="block py-1.5 text-[11px] tracking-wide transition-colors"
                             style={{ color: 'var(--t2)' }}>
                             {s.label}
                           </Link>
@@ -411,13 +419,141 @@ export default function Navbar() {
                     )}
                   </div>
                 ))}
-                <NavLink to="/wishlist" onClick={() => setMobileOpen(false)}
-                  style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 26, fontWeight: 300, color: 'var(--t2)', display: 'block', paddingBlock: 10, borderBottom: '1px solid var(--bd)' }}>
-                  Список бажань {wishCount > 0 && `(${wishCount})`}
-                </NavLink>
+
+                {/* Compact accordion: account */}
+                <div style={{ borderBottom: '1px solid var(--bd)', marginTop: 6 }}>
+                  <button
+                    onClick={() => setMobileAccountOpen(v => !v)}
+                    style={{
+                      width: '100%',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--t0)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '10px 0',
+                      fontSize: 13,
+                      letterSpacing: 1.2,
+                      textTransform: 'uppercase',
+                      fontFamily: 'Jost, sans-serif',
+                    }}
+                  >
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                      <User size={14} /> Кабінет
+                    </span>
+                    <ChevronDown size={14} style={{ transform: mobileAccountOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .2s' }} />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileAccountOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.18 }}
+                        style={{ overflow: 'hidden', paddingBottom: 8 }}
+                      >
+                        {user ? (
+                          <>
+                            <Link to="/account" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                              Особистий кабінет
+                            </Link>
+                            <Link to="/account/orders" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                              Мої замовлення
+                            </Link>
+                            <Link to="/account/settings" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                              Налаштування
+                            </Link>
+                            {profile?.role === 'admin' && (
+                              <Link to="/admin" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                                Адмін-панель
+                              </Link>
+                            )}
+                            <button
+                              onClick={async () => { await handleLogout(); setMobileOpen(false) }}
+                              style={{ background: 'none', border: 'none', color: 'var(--berry)', padding: '8px 0 4px 4px', fontSize: 12, textAlign: 'left' }}
+                              className="w-full"
+                            >
+                              Вийти
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <Link to="/auth" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                              Увійти
+                            </Link>
+                            <Link to="/auth?mode=register" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                              Реєстрація
+                            </Link>
+                          </>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Compact accordion: wishlist */}
+                <div style={{ borderBottom: '1px solid var(--bd)' }}>
+                  <button
+                    onClick={() => setMobileWishlistOpen(v => !v)}
+                    style={{
+                      width: '100%',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--t0)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '10px 0',
+                      fontSize: 13,
+                      letterSpacing: 1.2,
+                      textTransform: 'uppercase',
+                      fontFamily: 'Jost, sans-serif',
+                    }}
+                  >
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                      <Heart size={14} /> Обране {wishCount > 0 ? `(${wishCount})` : ''}
+                    </span>
+                    <ChevronDown size={14} style={{ transform: mobileWishlistOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .2s' }} />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileWishlistOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.18 }}
+                        style={{ overflow: 'hidden', paddingBottom: 8 }}
+                      >
+                        {wishlistPreview.length > 0 ? (
+                          <>
+                            {wishlistPreview.map(product => (
+                              <Link
+                                key={product.id}
+                                to={`/product/${product.slug}`}
+                                onClick={() => setMobileOpen(false)}
+                                className="block py-1.5 pl-1 text-[12px]"
+                                style={{ color: 'var(--t1)' }}
+                              >
+                                {product.name_uk}
+                              </Link>
+                            ))}
+                            <Link to="/wishlist" onClick={() => setMobileOpen(false)} className="block pt-2 pl-1 text-[11px]" style={{ color: 'var(--gold-d)', letterSpacing: 1.3, textTransform: 'uppercase' }}>
+                              Дивитись все
+                            </Link>
+                          </>
+                        ) : (
+                          <p style={{ fontSize: 12, color: 'var(--t2)', padding: '2px 0 8px 4px' }}>
+                            У списку поки немає товарів
+                          </p>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </nav>
 
-              <div className="p-6 flex items-center justify-between" style={{ borderTop: '1px solid var(--bd)' }}>
+              <div className="px-4 py-4 flex items-center justify-between" style={{ borderTop: '1px solid var(--bd)' }}>
                 <span className="label-xs" style={{ marginBottom: 0 }}>bionerica.ua</span>
               </div>
             </motion.div>
