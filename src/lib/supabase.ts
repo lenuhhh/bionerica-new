@@ -4,6 +4,11 @@ const URL = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.
 const KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key-here'
 
 export const supabase = createClient(URL, KEY)
+export const isSupabaseConfigured = Boolean(
+  URL && KEY &&
+  !URL.includes('your-project.supabase.co') &&
+  !KEY.includes('your-anon-key-here')
+)
 
 /* ── AUTH ── */
 export const signInGoogle = () =>
@@ -32,7 +37,7 @@ export const signUpEmail = (email: string, password: string, name: string) =>
     email, password,
     options: {
       data: { full_name: name },
-      emailRedirectTo: `${window.location.origin}/account`,
+      emailRedirectTo: `${window.location.origin}/auth?mode=login`,
     },
   })
 

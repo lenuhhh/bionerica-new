@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
-import { signInEmail, signUpEmail, signInGoogle, resetPassword, resendSignupConfirmation, supabase, updatePassword } from '@/lib/supabase'
+import { signInEmail, signUpEmail, signInGoogle, resetPassword, resendSignupConfirmation, supabase, updatePassword, isSupabaseConfigured } from '@/lib/supabase'
 import { useSEO } from '@/hooks/useSEO'
 import toast from 'react-hot-toast'
 
@@ -29,6 +29,12 @@ export default function Auth() {
   const regForm    = useForm<RegisterForm>()
   const resetForm  = useForm<ResetForm>()
 
+  const ensureSupabaseConfigured = () => {
+    if (isSupabaseConfigured) return true
+    toast.error('Supabase не налаштований. Додайте VITE_SUPABASE_URL і VITE_SUPABASE_ANON_KEY у .env', { className: 'hot-toast' })
+    return false
+  }
+
   useSEO({
     title: mode === 'register' ? 'Реєстрація' : 'Вхід до акаунту',
     description: 'Увійдіть або зареєструйтесь в Біонеріка — відстежуйте замовлення, зберігайте улюблені вироби та отримуйте ексклюзивні пропозиції.',
@@ -41,19 +47,28 @@ export default function Auth() {
 
     const hash = window.location.hash || ''
     const hasRecoveryInHash = /type=recovery|access_token=|refresh_token=/i.test(hash)
-    const hasRecoveryInQuery = sp.get('type') === 'recovery' || Boolean(sp.get('code'))
+    const code = sp.get('code')
+    const type = sp.get('type')
+
+    if (code && type === 'signup') {
+      void (async () => {
+        const { error } = await supabase.auth.exchangeCodeForSession(code)
+        if (error) {
+          toast.error(error.message || 'Не вдалося підтвердити email', { className: 'hot-toast' })
+          return
+        }
+        setEmailConfirmed(true)
+        toast.success('Email успішно підтверджено! Тепер можна увійти.', { className: 'hot-toast', duration: 4000 })
+      })()
+      return
+    }
+
+    const hasRecoveryInQuery = type === 'recovery' || Boolean(code)
 
     if (hasRecoveryInHash || hasRecoveryInQuery) {
       setMode('reset')
     }
 
-    // Обработка успешного подтверждения email
-    const code = sp.get('code')
-    const type = sp.get('type')
-    if (code && type === 'signup') {
-      setEmailConfirmed(true)
-      toast.success('Email успішно підтверджено! Тепер виконайте вхід.', { className: 'hot-toast', duration: 4000 })
-    }
   }, [mode, sp])
 
   useEffect(() => {
@@ -119,6 +134,7 @@ export default function Auth() {
   }, [mode, sp])
 
   const handleGoogle = async () => {
+    if (!ensureSupabaseConfigured()) return
     const { error } = await signInGoogle()
     if (error) toast.error('Помилка входу через Google', { className: 'hot-toast' })
   }
@@ -131,6 +147,7 @@ export default function Auth() {
       toast.error('Введіть email та пароль', { className: 'hot-toast' })
       return
     }
+    if (!ensureSupabaseConfigured()) return
 
     setLoading(true)
     const { error } = await signInEmail(email, password)
@@ -166,14 +183,17 @@ export default function Auth() {
       regForm.setError('confirm', { message: 'Паролі не збігаються' })
       return
     }
+    if (!ensureSupabaseConfigured()) return
     registerScrollYRef.current = window.scrollY
     setLoading(true)
-    const { error } = await signUpEmail(d.email, d.password, d.name)
+    const email = d.email.trim().toLowerCase()
+    const name = d.name.trim()
+    const { error } = await signUpEmail(email, d.password, name)
     setLoading(false)
     if (error) {
       toast.error(error.message || 'Помилка реєстрації', { className: 'hot-toast' })
     } else {
-      setEmailSent(d.email)
+      setEmailSent(email)
       requestAnimationFrame(() => {
         window.scrollTo({ top: registerScrollYRef.current, left: 0, behavior: 'auto' })
       })
@@ -186,6 +206,7 @@ export default function Auth() {
       resetForm.setError('confirm', { message: 'Паролі не збігаються' })
       return
     }
+    if (!ensureSupabaseConfigured()) return
     if (!resetSessionReady) {
       toast.error('Немає активної recovery-сесії. Запросіть нове посилання.', { className: 'hot-toast' })
       return
@@ -229,7 +250,7 @@ export default function Auth() {
           </button>
           <button
             onClick={() => { setEmailConfirmed(false); setMode('register') }}
-            style={{ background: 'none', border: '1px solid var(--bd)', padding: '12px 20px', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--t2)', fontFamily: 'Jost, sans-serif', cursor: 'none', width: '100%' }}
+            style={{ background: 'none', border: '1px solid var(--bd)', padding: '12px 20px', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--t2)', fontFamily: 'Jost, sans-serif', cursor: 'pointer', width: '100%' }}
           >
             Зареєструватись знову
           </button>
@@ -289,7 +310,7 @@ export default function Auth() {
             </button>
             <button
               onClick={() => setEmailSent('')}
-              style={{ background: 'none', border: '1px solid var(--bd)', padding: '12px 20px', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--t2)', fontFamily: 'Jost, sans-serif', cursor: 'none' }}
+              style={{ background: 'none', border: '1px solid var(--bd)', padding: '12px 20px', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--t2)', fontFamily: 'Jost, sans-serif', cursor: 'pointer' }}
             >
               Спробувати знову
             </button>
@@ -347,7 +368,7 @@ export default function Auth() {
                     fontSize: 11, letterSpacing: 2, textTransform: 'uppercase',
                     color: mode === m ? 'var(--t0)' : 'var(--t2)',
                     borderBottom: `2px solid ${mode === m ? 'var(--gold)' : 'transparent'}`,
-                    marginBottom: -1, cursor: 'none',
+                    marginBottom: -1, cursor: 'pointer',
                   }}>
                   {m === 'login' ? 'Увійти' : 'Реєстрація'}
                 </button>
@@ -355,7 +376,7 @@ export default function Auth() {
             </div>
           ) : (
             <button onClick={() => setMode('login')} className="flex items-center gap-2 mb-8"
-              style={{ background: 'none', border: 'none', fontSize: 12, letterSpacing: 2, color: 'var(--t2)', cursor: 'none', textTransform: 'uppercase' }}>
+              style={{ background: 'none', border: 'none', fontSize: 12, letterSpacing: 2, color: 'var(--t2)', cursor: 'pointer', textTransform: 'uppercase' }}>
               <ArrowLeft size={13} /> До входу
             </button>
           )}
@@ -468,7 +489,7 @@ export default function Auth() {
                       </p>
                     )}
                   </div>
-                  <label className="flex items-start gap-3" style={{ fontSize: 12, color: 'var(--t2)', cursor: 'none' }}>
+                  <label className="flex items-start gap-3" style={{ fontSize: 12, color: 'var(--t2)', cursor: 'pointer' }}>
                     <input type="checkbox" {...regForm.register('agree', { required: true })} style={{ marginTop: 2, accentColor: 'var(--gold)' }} />
                     Погоджуюсь з <Link to="/terms" style={{ color: 'var(--gold-d)', textDecoration: 'underline' }}>умовами використання</Link> та <Link to="/privacy" style={{ color: 'var(--gold-d)', textDecoration: 'underline' }}>політикою конфіденційності</Link>
                   </label>
@@ -486,7 +507,7 @@ export default function Auth() {
                     toast.error(`Зачекайте ${forgotCooldownSec}с перед повторною відправкою`, { className: 'hot-toast' })
                     return
                   }
-                  const email = (e.currentTarget.querySelector('input[type=email]') as HTMLInputElement)?.value
+                  const email = (e.currentTarget.querySelector('input[type=email]') as HTMLInputElement)?.value?.trim().toLowerCase()
                   if (!email) return
                   setLoading(true)
                   const { error } = await resetPassword(email)

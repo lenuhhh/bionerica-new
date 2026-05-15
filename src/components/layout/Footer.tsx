@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { Instagram, Facebook, Youtube, ArrowRight, MapPin, Phone, Mail } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useI18n } from '@/lib/i18n'
+import CategoryIcon from '@/components/ui/CategoryIcon'
 
 /* ── Hard-coded dark palette — never changes with theme ───────────────────
   Footer uses the same warm premium tone as dark sections/reviews.
@@ -40,40 +41,40 @@ export default function Footer() {
     {
       heading: 'Каталог',
       links: [
-        ['/catalog?cat=berries',    '🍓 Ягоди'],
-        ['/catalog?cat=fruits',     '🍎 Фрукти'],
-        ['/catalog?cat=vegetables', '🥦 Овочі'],
-        ['/catalog?cat=greens',     '🌿 Зелень'],
-        ['/catalog?cat=plants',     '🌱 Розсада'],
-        ['/catalog?cat=baskets',    '🧺 Набори'],
+        { to: '/catalog?cat=berries', label: 'Ягоди', icon: 'berries' as const },
+        { to: '/catalog?cat=fruits', label: 'Фрукти', icon: 'fruits' as const },
+        { to: '/catalog?cat=vegetables', label: 'Овочі', icon: 'vegetables' as const },
+        { to: '/catalog?cat=greens', label: 'Зелень', icon: 'greens' as const },
+        { to: '/catalog?cat=plants', label: 'Розсада', icon: 'plants' as const },
+        { to: '/catalog?cat=baskets', label: 'Набори', icon: 'baskets' as const },
       ],
     },
     {
       heading: 'Компанія',
       links: [
-        ['/story', 'Як ми вирощуємо'],
-        ['/blog',  'Блог про їжу'],
-        ['/contact', 'Контакти'],
-        ['/auth', 'Особистий кабінет'],
+        { to: '/story', label: 'Як ми вирощуємо' },
+        { to: '/blog', label: 'Блог про їжу' },
+        { to: '/contact', label: 'Контакти' },
+        { to: '/auth', label: 'Особистий кабінет' },
       ],
     },
     {
       heading: 'Послуги',
       links: [
-        ['/contact',    'Оптові замовлення'],
-        ['/contact',    'Тижнева підписка'],
-        ['/contact',    'Подарункові набори'],
-        ['/gift-cards', 'Подарункові сертифікати'],
+        { to: '/contact', label: 'Оптові замовлення' },
+        { to: '/contact', label: 'Тижнева підписка' },
+        { to: '/contact', label: 'Подарункові набори' },
+        { to: '/gift-cards', label: 'Подарункові сертифікати' },
       ],
     },
     {
       heading: 'Підтримка',
       links: [
-        ['/faq',      'Часті питання'],
-        ['/delivery', 'Доставка та оплата'],
-        ['/care',     'Зберігання продуктів'],
-        ['/install',  '📱 Встановити додаток'],
-        ['/contact',  'Написати нам'],
+        { to: '/faq', label: 'Часті питання' },
+        { to: '/delivery', label: 'Доставка та оплата' },
+        { to: '/care', label: 'Зберігання продуктів' },
+        { to: '/install', label: 'Встановити додаток' },
+        { to: '/contact', label: 'Написати нам' },
       ],
     },
   ]
@@ -295,15 +296,18 @@ export default function Footer() {
                 {col.heading}
               </h5>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {col.links.map(([to, label]) => (
-                  <li key={label}>
+                {col.links.map((link) => (
+                  <li key={link.to}>
                     <Link
-                      to={to}
+                      to={link.to}
                       style={{ fontSize: 13, color: WHITE_LOW, textDecoration: 'none', lineHeight: 1.4 }}
                       onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = WHITE_HIGH}
                       onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = WHITE_LOW}
                     >
-                      {label}
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                        {'icon' in link && link.icon ? <CategoryIcon id={link.icon} size={13} mode="line" /> : null}
+                        <span>{link.label}</span>
+                      </span>
                     </Link>
                   </li>
                 ))}

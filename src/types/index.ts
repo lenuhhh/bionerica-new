@@ -1,3 +1,5 @@
+import type { CategoryIconId } from '@/components/ui/CategoryIcon'
+
 export interface Product {
   id: number
   slug: string
@@ -111,7 +113,7 @@ export interface Category {
   id: string
   label: string
   label_uk: string
-  icon?: string
+  icon?: CategoryIconId
   description?: string
   image?: string
   count?: number

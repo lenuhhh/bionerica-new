@@ -1,149 +1,135 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <!-- Static pages -->
   <url>
-    <loc>https://broiderie.ua/</loc>
-    <lastmod>2025-03-01</lastmod>
+    <loc>https://bionerica.ua/</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/catalog</loc>
-    <lastmod>2025-03-01</lastmod>
+    <loc>https://bionerica.ua/catalog</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/story</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://bionerica.ua/story</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/blog</loc>
-    <lastmod>2025-03-01</lastmod>
+    <loc>https://bionerica.ua/blog</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/contact</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://bionerica.ua/contact</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Category pages -->
   <url>
-    <loc>https://broiderie.ua/catalog?cat=vyshyvanky</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/catalog?cat=sukni</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/catalog?cat=rushnyky</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/catalog?cat=dim</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/catalog?cat=aksesuary</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Product pages -->
-  <url>
-    <loc>https://broiderie.ua/product/vyshyvanka-poltavska-premium</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800</image:loc>
-      <image:title>Вишиванка Полтавська Преміум</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/rushnyk-vesilnyi-zolota-nytka</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/suknia-vishyta-osen</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/sorochka-cholovycha-hetman</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/suknia-korotka-kalyna</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/skatertin-svyatkova-zirka</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/khustyna-shyfonova-maky</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://broiderie.ua/product/vyshyvanka-dytiacha-sonechko</loc>
-    <lastmod>2025-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- Blog posts -->
-  <url>
-    <loc>https://broiderie.ua/blog/istoria-ukrainskoi-vyshyvky</loc>
-    <lastmod>2025-03-15</lastmod>
+    <loc>https://bionerica.ua/faq</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/blog/iak-dogliadaty-za-vyshyvkoiu</loc>
-    <lastmod>2025-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
+    <loc>https://bionerica.ua/reviews</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/blog/symvoly-v-ukrainskii-vyshyvtsi</loc>
-    <lastmod>2025-02-22</lastmod>
+    <loc>https://bionerica.ua/partners</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://broiderie.ua/blog/indyvidualne-zamovlennia</loc>
-    <lastmod>2025-02-10</lastmod>
+    <loc>https://bionerica.ua/lookbook</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/delivery</loc>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/care</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/gift-cards</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/privacy</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/terms</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/sitemap</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Category pages -->
+  <url>
+    <loc>https://bionerica.ua/catalog?cat=%D0%AF%D0%B3%D0%BE%D0%B4%D0%B8</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/catalog?cat=%D0%9E%D0%B2%D0%BE%D1%87%D1%96</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/catalog?cat=%D0%97%D0%B5%D0%BB%D0%B5%D0%BD%D1%8C</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/catalog?cat=%D0%A4%D1%80%D1%83%D0%BA%D1%82%D0%B8</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/catalog?cat=%D0%9C%D1%96%D0%BA%D1%80%D0%BE%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%8C</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bionerica.ua/catalog?cat=%D0%A0%D0%BE%D0%B7%D1%81%D0%B0%D0%B4%D0%B0</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

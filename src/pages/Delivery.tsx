@@ -163,21 +163,77 @@ export default function Delivery() {
               ))}
             </div>
             <div>
-              <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 300, color: 'var(--t0)', marginBottom: 16 }}>Як повернути</h3>
-              {[
-                'Напишіть нам на hello@broiderie.ua або у Telegram',
-                'Вкажіть номер замовлення та причину повернення',
-                'Ми підтвердимо і надішлемо адресу повернення',
-                'Відправте виріб у надійній упаковці',
-                'Після отримання та перевірки — повернення коштів',
-              ].map((step, i) => (
-                <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 14 }}>
-                  <span style={{ width: 28, height: 28, background: 'var(--gold)', color: '#18160e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontFamily: 'Cormorant Garamond, serif', flexShrink: 0, borderRadius: '50%' }}>
-                    {i + 1}
-                  </span>
-                  <p style={{ fontSize: 13, color: 'var(--t1)', lineHeight: 1.6, paddingTop: 4 }}>{step}</p>
+              <div
+                style={{
+                  padding: 'clamp(16px, 3.5vw, 22px)',
+                  border: '1px solid var(--bd)',
+                  background: 'linear-gradient(180deg, var(--b1) 0%, rgba(223,236,216,0.78) 100%)',
+                  boxShadow: '0 14px 32px rgba(24,38,20,0.08)',
+                  borderRadius: 8,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+                  <RotateCcw size={16} style={{ color: 'var(--gold-d)' }} />
+                  <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 24, fontWeight: 300, color: 'var(--t0)' }}>Як повернути</h3>
                 </div>
-              ))}
+
+                {[
+                  'Напишіть нам на hello@broiderie.ua або у Telegram',
+                  'Вкажіть номер замовлення та причину повернення',
+                  'Ми підтвердимо і надішлемо адресу повернення',
+                  'Відправте виріб у надійній упаковці',
+                  'Після отримання та перевірки — повернення коштів',
+                ].map((step, i, arr) => (
+                  <div key={i} style={{ display: 'flex', gap: 12, marginBottom: i === arr.length - 1 ? 0 : 12 }}>
+                    <div style={{ position: 'relative', width: 30, flexShrink: 0, display: 'flex', justifyContent: 'center' }}>
+                      <span
+                        style={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: '999px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: 12,
+                          letterSpacing: 0.4,
+                          color: '#f4faef',
+                          background: 'linear-gradient(180deg, var(--gold) 0%, var(--gold-d) 100%)',
+                          border: '1px solid rgba(47,99,38,0.35)',
+                          boxShadow: '0 6px 14px rgba(47,99,38,0.25)',
+                        }}
+                      >
+                        {i + 1}
+                      </span>
+                      {i !== arr.length - 1 && (
+                        <span
+                          aria-hidden
+                          style={{
+                            position: 'absolute',
+                            top: 32,
+                            width: 1,
+                            bottom: -14,
+                            background: 'linear-gradient(to bottom, rgba(74,140,63,0.38), rgba(74,140,63,0.12))',
+                          }}
+                        />
+                      )}
+                    </div>
+
+                    <p
+                      style={{
+                        flex: 1,
+                        fontSize: 13,
+                        color: 'var(--t1)',
+                        lineHeight: 1.6,
+                        paddingTop: 5,
+                        borderBottom: i === arr.length - 1 ? 'none' : '1px dashed rgba(74,140,63,0.2)',
+                        paddingBottom: i === arr.length - 1 ? 0 : 10,
+                      }}
+                    >
+                      {step}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

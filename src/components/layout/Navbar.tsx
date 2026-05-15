@@ -6,15 +6,16 @@ import { useCart, useAuth, useWishlist, useUi } from '@/store'
 import { signOut } from '@/lib/supabase'
 import { useSitePresence } from '@/hooks/useSitePresence'
 import { products } from '@/data'
+import CategoryIcon from '@/components/ui/CategoryIcon'
 
 const mainNav = [
   { to: '/catalog', label: 'Каталог', sub: [
-    { to: '/catalog?cat=berries', label: '🍓 Ягоди' },
-    { to: '/catalog?cat=fruits', label: '🍎 Фрукти' },
-    { to: '/catalog?cat=vegetables', label: '🥦 Овочі' },
-    { to: '/catalog?cat=greens', label: '🌿 Зелень' },
-    { to: '/catalog?cat=plants', label: '🌱 Розсада' },
-    { to: '/catalog?cat=baskets', label: '🧵 Подарункові набори' },
+    { to: '/catalog?cat=berries', label: 'Ягоди', icon: 'berries' as const },
+    { to: '/catalog?cat=fruits', label: 'Фрукти', icon: 'fruits' as const },
+    { to: '/catalog?cat=vegetables', label: 'Овочі', icon: 'vegetables' as const },
+    { to: '/catalog?cat=greens', label: 'Зелень', icon: 'greens' as const },
+    { to: '/catalog?cat=plants', label: 'Розсада', icon: 'plants' as const },
+    { to: '/catalog?cat=baskets', label: 'Подарункові набори', icon: 'baskets' as const },
   ]},
   { to: '/story', label: 'Як ми вирощуємо' },
   { to: '/blog', label: 'Блог' },
@@ -50,6 +51,7 @@ export default function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [mobileAccountOpen, setMobileAccountOpen] = useState(false)
   const [mobileWishlistOpen, setMobileWishlistOpen] = useState(false)
+  const [mobileSectionOpen, setMobileSectionOpen] = useState<string | null>(null)
   const navigate = useNavigate()
   const location = useLocation()
   const { onlineNow } = useSitePresence(user?.id)
@@ -97,6 +99,30 @@ export default function Navbar() {
     setUserMenuOpen(false)
   }
 
+  const closeMobileMenu = () => {
+    setMobileOpen(false)
+    setMobileAccountOpen(false)
+    setMobileWishlistOpen(false)
+    setMobileSectionOpen(null)
+  }
+
+  const mobileRowStyle = {
+    width: '100%',
+    background: 'none',
+    border: 'none',
+    color: 'var(--t0)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '11px 0',
+    fontSize: 13,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase' as const,
+    fontFamily: 'Jost, sans-serif',
+    fontWeight: 400,
+    textAlign: 'left' as const,
+  }
+
   return (
     <>
       <motion.header
@@ -112,32 +138,33 @@ export default function Navbar() {
         transition={{ backgroundColor: { duration: 0.3 }, boxShadow: { duration: 0.3 } }}
       >
         <div className="page-wrap">
-          <div className="flex items-center gap-8 py-5">
+          <div className="flex items-center justify-between gap-4 py-5">
 
             {/* Mobile menu toggle */}
-            <button className="lg:hidden" style={{ color: 'var(--t0)', background: 'none', border: 'none' }}
+            <button className="lg:hidden order-last" style={{ color: 'var(--t0)', background: 'none', border: 'none' }}
               onClick={() => setMobileOpen(true)}>
               <Menu size={22} />
             </button>
 
             {/* Logo — Bionerica */}
-            <Link to="/" className="flex-shrink-0 group">
+            <Link to="/" className="flex-shrink-0 group min-w-0">
               <div className="flex items-center gap-3" style={{ lineHeight: 1 }}>
                 <div style={{ flexShrink: 0, transform: 'translateY(-1px)' }}>
                   <BrandMark />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div style={{
                     fontFamily: 'Plus Jakarta Sans, DM Sans, sans-serif',
-                    fontSize: 28,
+                    fontSize: 'clamp(20px, 5vw, 28px)',
                     fontWeight: 700,
                     letterSpacing: '-0.035em',
                     color: 'var(--t0)',
                     transition: 'color 0.2s',
+                    whiteSpace: 'nowrap',
                   }}>
                     Bio<span style={{ color: 'var(--gold)' }}>nerica</span>
                   </div>
-                  <div style={{ fontSize: 8, letterSpacing: '0.5em', textTransform: 'uppercase', color: 'var(--t2)', marginTop: 3 }}>
+                  <div style={{ fontSize: 8, letterSpacing: '0.38em', textTransform: 'uppercase', color: 'var(--t2)', marginTop: 3, whiteSpace: 'nowrap' }}>
                     ФЕРМА&thinsp;·&thinsp;ОРГАНІКА&thinsp;·&thinsp;UA
                   </div>
                 </div>
@@ -209,7 +236,10 @@ export default function Navbar() {
                             onMouseEnter={e => { (e.target as HTMLElement).style.background = 'var(--b1)'; (e.target as HTMLElement).style.color = 'var(--t0)' }}
                             onMouseLeave={e => { (e.target as HTMLElement).style.background = 'none'; (e.target as HTMLElement).style.color = 'var(--t1)' }}
                           >
-                            {s.label}
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                              {'icon' in s && s.icon ? <CategoryIcon id={s.icon} size={14} mode="line" /> : null}
+                              <span>{s.label}</span>
+                            </span>
                           </Link>
                         ))}
                       </motion.div>
@@ -220,7 +250,7 @@ export default function Navbar() {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-4 ml-auto">
+            <div className="hidden lg:flex items-center gap-4 ml-auto">
               {/* Search */}
               <button onClick={toggleSearch}
                 style={{ background: 'none', border: 'none', color: 'var(--t0)' }}
@@ -373,12 +403,12 @@ export default function Navbar() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="fixed inset-0 z-[80]" style={{ background: 'rgba(0,0,0,0.52)' }}
-              onClick={() => setMobileOpen(false)} />
+              onClick={closeMobileMenu} />
             <motion.div
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 320, damping: 34, mass: 0.85 }}
               className="fixed top-0 left-0 bottom-0 z-[90] flex flex-col"
-              style={{ width: 'min(272px, 82vw)', background: 'var(--b0)', borderRight: '1px solid var(--bd)' }}
+              style={{ width: 'min(320px, 88vw)', background: 'var(--b0)', borderRight: '1px solid var(--bd)' }}
             >
               <div className="flex items-center justify-between px-4 py-4" style={{ borderBottom: '1px solid var(--bd)' }}>
                 <div className="flex items-center gap-3">
@@ -387,36 +417,71 @@ export default function Navbar() {
                     Bio<span style={{ color: 'var(--gold)' }}>nerica</span>
                   </span>
                 </div>
-                <button onClick={() => setMobileOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--t0)' }}>
+                <button onClick={closeMobileMenu} style={{ background: 'none', border: 'none', color: 'var(--t0)' }}>
                   <X size={20} />
                 </button>
+              </div>
+
+              <div className="px-4 py-4" style={{ borderBottom: '1px solid var(--bd)' }}>
+                <Link to="/catalog" onClick={closeMobileMenu} className="flex items-center justify-between gap-3 px-0 py-2" style={{ color: 'var(--t0)', textDecoration: 'none' }}>
+                  <span style={{ fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase', fontFamily: 'Jost, sans-serif' }}>Пошук і каталог</span>
+                  <Search size={16} />
+                </Link>
+                <Link to="/cart" onClick={closeMobileMenu} className="flex items-center justify-between gap-3 px-0 py-2" style={{ color: 'var(--t0)', textDecoration: 'none' }}>
+                  <span style={{ fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase', fontFamily: 'Jost, sans-serif' }}>Кошик</span>
+                  <ShoppingBag size={16} />
+                </Link>
               </div>
 
               <nav className="flex-1 overflow-y-auto px-4 py-4">
                 {mainNav.map(link => (
                   <div key={link.to} className="mb-1">
-                    <NavLink to={link.to} onClick={() => setMobileOpen(false)}
-                      style={({ isActive }) => ({
-                        fontFamily: 'Plus Jakarta Sans, DM Sans, sans-serif',
-                        fontSize: 18,
-                        fontWeight: 650,
-                        color: isActive ? 'var(--t0)' : 'var(--t2)',
-                        display: 'block',
-                        paddingBlock: 8,
-                        borderBottom: '1px solid var(--bd)',
-                      })}>
-                      {link.label}
-                    </NavLink>
-                    {link.sub && (
-                      <div className="pl-3 pb-1">
-                        {link.sub.map(s => (
-                          <Link key={s.to} to={s.to} onClick={() => setMobileOpen(false)}
-                            className="block py-1.5 text-[11px] tracking-wide transition-colors"
-                            style={{ color: 'var(--t2)' }}>
-                            {s.label}
-                          </Link>
-                        ))}
-                      </div>
+                    {link.sub ? (
+                      <>
+                        <button
+                          onClick={() => setMobileSectionOpen(open => open === link.to ? null : link.to)}
+                          style={{
+                            ...mobileRowStyle,
+                            borderBottom: '1px solid var(--bd)',
+                          }}
+                        >
+                          <span>{link.label}</span>
+                          <ChevronDown size={14} style={{ transform: mobileSectionOpen === link.to ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .2s' }} />
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {mobileSectionOpen === link.to && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                              style={{ overflow: 'hidden' }}
+                            >
+                              <div className="pl-3 pb-1 pt-2">
+                                {link.sub.map(s => (
+                                  <Link key={s.to} to={s.to} onClick={closeMobileMenu}
+                                    className="block py-1.5 text-[12px] tracking-wide transition-colors"
+                                    style={{ color: 'var(--t2)' }}>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                                      {'icon' in s && s.icon ? <CategoryIcon id={s.icon} size={13} mode="line" /> : null}
+                                      <span>{s.label}</span>
+                                    </span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <NavLink to={link.to} onClick={closeMobileMenu}
+                        style={({ isActive }) => ({
+                          ...mobileRowStyle,
+                          color: isActive ? 'var(--t0)' : 'var(--t2)',
+                          borderBottom: '1px solid var(--bd)',
+                        })}>
+                        {link.label}
+                      </NavLink>
                     )}
                   </div>
                 ))}
@@ -426,18 +491,8 @@ export default function Navbar() {
                   <button
                     onClick={() => setMobileAccountOpen(v => !v)}
                     style={{
-                      width: '100%',
-                      background: 'none',
-                      border: 'none',
+                      ...mobileRowStyle,
                       color: 'var(--t0)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '10px 0',
-                      fontSize: 13,
-                      letterSpacing: 1.2,
-                      textTransform: 'uppercase',
-                      fontFamily: 'Jost, sans-serif',
                     }}
                   >
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
@@ -456,22 +511,22 @@ export default function Navbar() {
                       >
                         {user ? (
                           <>
-                            <Link to="/account" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                            <Link to="/account" onClick={closeMobileMenu} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
                               Особистий кабінет
                             </Link>
-                            <Link to="/account/orders" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                            <Link to="/account/orders" onClick={closeMobileMenu} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
                               Мої замовлення
                             </Link>
-                            <Link to="/account/settings" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                            <Link to="/account/settings" onClick={closeMobileMenu} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
                               Налаштування
                             </Link>
                             {profile?.role === 'admin' && (
-                              <Link to="/admin" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                              <Link to="/admin" onClick={closeMobileMenu} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
                                 Адмін-панель
                               </Link>
                             )}
                             <button
-                              onClick={async () => { await handleLogout(); setMobileOpen(false) }}
+                              onClick={async () => { await handleLogout(); closeMobileMenu() }}
                               style={{ background: 'none', border: 'none', color: 'var(--berry)', padding: '8px 0 4px 4px', fontSize: 12, textAlign: 'left' }}
                               className="w-full"
                             >
@@ -480,10 +535,10 @@ export default function Navbar() {
                           </>
                         ) : (
                           <>
-                            <Link to="/auth" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                            <Link to="/auth" onClick={closeMobileMenu} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
                               Увійти
                             </Link>
-                            <Link to="/auth?mode=register" onClick={() => setMobileOpen(false)} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
+                            <Link to="/auth?mode=register" onClick={closeMobileMenu} className="block py-1.5 pl-1 text-[12px]" style={{ color: 'var(--t1)' }}>
                               Реєстрація
                             </Link>
                           </>
@@ -498,18 +553,8 @@ export default function Navbar() {
                   <button
                     onClick={() => setMobileWishlistOpen(v => !v)}
                     style={{
-                      width: '100%',
-                      background: 'none',
-                      border: 'none',
+                      ...mobileRowStyle,
                       color: 'var(--t0)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '10px 0',
-                      fontSize: 13,
-                      letterSpacing: 1.2,
-                      textTransform: 'uppercase',
-                      fontFamily: 'Jost, sans-serif',
                     }}
                   >
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
@@ -532,14 +577,14 @@ export default function Navbar() {
                               <Link
                                 key={product.id}
                                 to={`/product/${product.slug}`}
-                                onClick={() => setMobileOpen(false)}
+                                onClick={closeMobileMenu}
                                 className="block py-1.5 pl-1 text-[12px]"
                                 style={{ color: 'var(--t1)' }}
                               >
                                 {product.name_uk}
                               </Link>
                             ))}
-                            <Link to="/wishlist" onClick={() => setMobileOpen(false)} className="block pt-2 pl-1 text-[11px]" style={{ color: 'var(--gold-d)', letterSpacing: 1.3, textTransform: 'uppercase' }}>
+                            <Link to="/wishlist" onClick={closeMobileMenu} className="block pt-2 pl-1 text-[11px]" style={{ color: 'var(--gold-d)', letterSpacing: 1.3, textTransform: 'uppercase' }}>
                               Дивитись все
                             </Link>
                           </>
