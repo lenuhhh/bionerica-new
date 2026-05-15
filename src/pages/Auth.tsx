@@ -323,7 +323,17 @@ export default function Auth() {
   return (
     <div style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)' }} className="lg:grid-cols-[1fr_1fr]">
       {/* ── Left decorative panel ── */}
-      <div className="hidden lg:flex flex-col relative overflow-hidden dark-section" style={{ background: '#1a1612' }}>
+      <div className="hidden lg:flex flex-col relative overflow-hidden dark-section" style={{
+        background: 'linear-gradient(135deg, #0f0d0a 0%, #1a1612 25%, #1f1612 50%, #1a2216 75%, #121612 100%)',
+        backgroundAttachment: 'fixed',
+      }}>
+        {/* Gradient overlay — green/gold accent */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 80% 100% at 50% 100%, rgba(74,140,63,0.08) 0%, rgba(201,169,110,0.04) 40%, transparent 100%)',
+          pointerEvents: 'none',
+        }} />
         <div className="absolute inset-0 orn-bg opacity-[0.07]" />
         <div className="relative z-[1] p-10 flex flex-col h-full">
           <Link to="/" className="flex items-center gap-3 mb-auto" style={{ color: 'var(--gold-l)' }}>
