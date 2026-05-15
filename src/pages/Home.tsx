@@ -6,6 +6,7 @@ import ProductCard from '@/components/ui/ProductCard'
 import LazyImage from '@/components/ui/LazyImage'
 import { SectionTitle, ReviewsSlider } from '@/components/ui'
 import { FadeIn } from '@/components/ui/FadeIn'
+import CategoryIcon from '@/components/ui/CategoryIcon'
 import { products, categories } from '@/data'
 import { usePosts } from '@/hooks/useProducts'
 import { useSEO, orgSchema } from '@/hooks/useSEO'
@@ -13,70 +14,6 @@ import NewsletterWidget from '@/components/ui/NewsletterWidget'
 
 /* ── Marquee words ── */
 const words = ['Полуниця', 'Черешня', 'Чорниця', 'Помідори черрі', 'Кавун', 'Органічна ферма', 'Свіжий збір', 'На замовлення']
-
-/* ── Category SVG icons ── */
-const CategoryIcon = ({ id, size = 38 }: { id: string; size?: number }) => {
-  const s = { width: size, height: size, display: 'block' } as const
-  if (id === 'berries') return (
-    <svg {...s} viewBox="0 0 38 38" fill="none" aria-hidden>
-      <path d="M19 8 C14 8 10 12 10 17 C10 24 19 31 19 31 C19 31 28 24 28 17 C28 12 24 8 19 8Z" fill="#e8534a" opacity="0.9"/>
-      <circle cx="16" cy="17" r="1" fill="rgba(255,255,255,0.6)"/>
-      <circle cx="20" cy="19" r="1" fill="rgba(255,255,255,0.6)"/>
-      <circle cx="18" cy="22" r="1" fill="rgba(255,255,255,0.6)"/>
-      <circle cx="22" cy="16" r="1" fill="rgba(255,255,255,0.6)"/>
-      <path d="M15 9 C15 6 17 4 19 5" stroke="#4a8c3f" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M17 8 C16 5 13 4 12 6" stroke="#4a8c3f" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M21 8 C22 5 25 4 26 6" stroke="#4a8c3f" strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  )
-  if (id === 'fruits') return (
-    <svg {...s} viewBox="0 0 38 38" fill="none" aria-hidden>
-      <path d="M19 10 C13 10 9 15 9 21 C9 26 13 30 19 30 C25 30 29 26 29 21 C29 15 25 10 19 10Z" fill="#e8534a" opacity="0.85"/>
-      <path d="M19 10 C19 7 21 5 23 5" stroke="#5a3e28" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M21 8 C23 5 27 5 27 8" stroke="#4a8c3f" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-      <path d="M13 19 C13 16 15 13 19 13" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2" strokeLinecap="round"/>
-      <ellipse cx="19" cy="30" rx="4" ry="1" fill="rgba(0,0,0,0.08)"/>
-    </svg>
-  )
-  if (id === 'vegetables') return (
-    <svg {...s} viewBox="0 0 38 38" fill="none" aria-hidden>
-      <circle cx="19" cy="18" r="6" fill="#4a8c3f" opacity="0.9"/>
-      <circle cx="12" cy="20" r="4.5" fill="#4a8c3f" opacity="0.8"/>
-      <circle cx="26" cy="20" r="4.5" fill="#4a8c3f" opacity="0.8"/>
-      <circle cx="19" cy="27" r="4" fill="#5a9e50" opacity="0.75"/>
-      <path d="M19 12 L19 8" stroke="#5a3e28" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M13 15 C12 12 9 10 8 12" stroke="#4a8c3f" strokeWidth="1.2" strokeLinecap="round"/>
-      <path d="M25 15 C26 12 29 10 30 12" stroke="#4a8c3f" strokeWidth="1.2" strokeLinecap="round"/>
-    </svg>
-  )
-  if (id === 'greens') return (
-    <svg {...s} viewBox="0 0 38 38" fill="none" aria-hidden>
-      <path d="M19 30 L19 14" stroke="#5a3e28" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M19 22 C15 20 11 14 13 9 C16 11 19 16 19 22Z" fill="#4a8c3f" opacity="0.9"/>
-      <path d="M19 18 C23 16 27 10 25 5 C22 7 19 12 19 18Z" fill="#6ab05e" opacity="0.85"/>
-      <path d="M19 26 C16 25 13 21 14 17 C17 18 19 22 19 26Z" fill="#4a8c3f" opacity="0.7"/>
-    </svg>
-  )
-  if (id === 'plants') return (
-    <svg {...s} viewBox="0 0 38 38" fill="none" aria-hidden>
-      <path d="M19 30 L19 20" stroke="#5a3e28" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M19 20 C17 16 13 14 11 16 C12 20 16 22 19 20Z" fill="#4a8c3f" opacity="0.9"/>
-      <path d="M19 17 C21 13 25 11 27 13 C26 17 22 19 19 17Z" fill="#6ab05e" opacity="0.88"/>
-      <path d="M15 30 C15 27 17 25 19 25 C21 25 23 27 23 30" stroke="#8a6a4a" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-      <path d="M16 30 C15 28 13 27 11 28" stroke="#8a6a4a" strokeWidth="1" strokeLinecap="round"/>
-      <path d="M22 30 C23 28 25 27 27 28" stroke="#8a6a4a" strokeWidth="1" strokeLinecap="round"/>
-    </svg>
-  )
-  // fallback 'all'
-  return (
-    <svg {...s} viewBox="0 0 38 38" fill="none" aria-hidden>
-      <circle cx="19" cy="19" r="3" fill="var(--gold)" opacity="0.8"/>
-      {[0,45,90,135,180,225,270,315].map(a => (
-        <line key={a} x1="19" y1="19" x2={19 + 10*Math.cos(a*Math.PI/180)} y2={19 + 10*Math.sin(a*Math.PI/180)} stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
-      ))}
-    </svg>
-  )
-}
 
 /* ── Lightweight fade-in variant — single reusable config ── */
 const fadeUp = (delay = 0) => ({
@@ -223,18 +160,26 @@ export default function Home() {
 
             {/* ── Visual collage ── */}
             <div
-              className="hidden lg:block relative"
+              className="relative"
               style={{ animation: 'fadeInRight 0.9s 0.2s cubic-bezier(.4,0,.2,1) both' }}
             >
               {/* Main image */}
-              <div className="relative" style={{ maxWidth: 620, marginLeft: 'auto', overflow: 'visible' }}>
-                <LazyImage
-                  src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=700&h=820&fit=crop&q=85&fm=webp"
-                  alt="Свіжа полуниця Bionerica"
-                  aspectRatio="aspect-[5/6]"
-                  priority
-                  className="w-full"
-                />
+              <div className="relative" style={{ maxWidth: 620, margin: '32px auto 0', overflow: 'visible' }}>
+                <div
+                  style={{
+                    borderRadius: 24,
+                    overflow: 'hidden',
+                    boxShadow: '0 28px 88px rgba(0,0,0,0.20)',
+                  }}
+                >
+                  <LazyImage
+                    src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=700&h=820&fit=crop&q=85&fm=webp"
+                    alt="Свіжа полуниця Bionerica"
+                    aspectRatio="aspect-[5/6]"
+                    priority
+                    className="w-full"
+                  />
+                </div>
 
                 {/* Floating thumbnail — anchored to left edge of main image */}
                 <motion.div
@@ -243,16 +188,16 @@ export default function Home() {
                   transition={{ duration: 0.55, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   style={{
                     position: 'absolute',
-                    left: '-13%',
+                    left: '0%',
                     top: '72%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '22%',
+                    transform: 'translate(-4%, -50%)',
+                    width: '26%',
                     minWidth: 110,
                     maxWidth: 160,
                     border: '5px solid var(--b0)',
                     animation: 'float-y 8s 1.5s ease-in-out infinite',
-                    boxShadow: '0 20px 48px rgba(0,0,0,0.22)',
-                    borderRadius: 6,
+                    boxShadow: '0 22px 52px rgba(0,0,0,0.24)',
+                    borderRadius: 12,
                     willChange: 'transform',
                     backfaceVisibility: 'hidden',
                     zIndex: 10,
@@ -295,7 +240,10 @@ export default function Home() {
                 }}
               >
                 <p style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 4, fontWeight: 600 }}>Зараз у сезоні</p>
-                <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--t0)' }}>🍓 Травень 2026</p>
+                <p style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 16, fontWeight: 500, color: 'var(--t0)' }}>
+                  <CategoryIcon id="berries" size={18} />
+                  <span>Травень 2026</span>
+                </p>
               </div>
             </div>
           </div>
@@ -339,7 +287,7 @@ export default function Home() {
       <section className="section" aria-labelledby="cat-heading">
         <div className="page-wrap">
           <SectionTitle eyebrow="Що шукаєте" title="Оберіть" titleItalic="категорію" className="mb-12" />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {categories.filter(c => c.id !== 'all').map((cat, i) => (
               <motion.div
                 key={cat.id}
@@ -351,7 +299,7 @@ export default function Home() {
               >
                 <Link
                   to={`/catalog?cat=${cat.id}`}
-                  className="group block relative overflow-hidden aspect-[4/3]"
+                  className="group block relative overflow-hidden aspect-[5/4] min-[420px]:aspect-[4/3]"
                   style={{ border: '1px solid var(--bd)', textDecoration: 'none' }}
                   aria-label={`Категорія: ${cat.label_uk}`}
                 >
@@ -360,21 +308,21 @@ export default function Home() {
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                     background: 'linear-gradient(180deg, var(--b0) 0%, var(--b1) 100%)',
                     transition: 'background 0.35s',
-                    padding: '14px 12px',
+                    padding: 'clamp(10px, 3.8vw, 14px) clamp(10px, 3vw, 12px)',
                     textAlign: 'center',
                   }}>
                     {/* Icon with float-y-sm animation, staggered by index */}
                     <span
                       style={{
-                        marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'center',
                         animation: `float-y-sm ${5 + i * 0.4}s ${i * 0.3}s ease-in-out infinite`,
                         filter: 'drop-shadow(0 2px 6px rgba(74,140,63,0.18))',
                       }}
                     >
-                      <CategoryIcon id={cat.id} size={38} />
+                      <CategoryIcon id={cat.id as 'all' | 'berries' | 'fruits' | 'vegetables' | 'greens' | 'plants'} size={34} />
                     </span>
                     <span style={{
-                      fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 300,
+                      fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(15px, 3.9vw, 18px)', fontWeight: 300,
                       color: 'var(--t0)', letterSpacing: 1,
                       transition: 'letter-spacing 0.3s',
                     }}
@@ -384,17 +332,17 @@ export default function Home() {
                     </span>
                     {cat.description && (
                       <span style={{
-                        marginTop: 6,
-                        fontSize: 11,
+                        marginTop: 5,
+                        fontSize: 'clamp(10px, 2.7vw, 11px)',
                         lineHeight: 1.35,
-                        maxWidth: 180,
+                        maxWidth: 190,
                         color: 'var(--t1)',
                       }}>
                         {cat.description}
                       </span>
                     )}
                     {cat.count && (
-                      <span style={{ fontSize: 10, letterSpacing: 2, color: 'var(--t2)', marginTop: 5 }}>
+                      <span style={{ fontSize: 'clamp(9px, 2.3vw, 10px)', letterSpacing: 2, color: 'var(--t2)', marginTop: 4 }}>
                         {cat.count} позицій
                       </span>
                     )}
